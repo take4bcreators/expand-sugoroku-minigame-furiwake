@@ -1,0 +1,61 @@
+[
+    {
+        "title": "七五三倍数振り分け",
+        "description": "表示された数字を ３の倍数、 ５の倍数、 ７の倍数、 その他 で振り分けよう！",
+        "textsize": 20,
+        "guide": {
+            "a": "３の倍数",
+            "b": "５の倍数",
+            "c": "７の倍数",
+            "d": "その他"
+        },
+        "content": [
+            {"item": "3", "anser": ["a"]},
+            {"item": "5", "anser": ["b"]},
+            {"item": "7", "anser": ["c"]},
+            {"item": "8", "anser": ["d"]},
+            {"item": "9", "anser": ["a"]},
+            {"item": "10", "anser": ["b"]},
+            {"item": "11", "anser": ["d"]},
+            {"item": "12", "anser": ["a"]},
+            {"item": "13", "anser": ["d"]},
+            {"item": "14", "anser": ["c"]},
+            {"item": "15", "anser": ["a","b"]},
+            {"item": "16", "anser": ["d"]},
+            {"item": "17", "anser": ["d"]},
+            {"item": "18", "anser": ["a"]},
+            {"item": "19", "anser": ["d"]},
+            {"item": "20", "anser": ["b"]},
+            {"item": "21", "anser": ["a","c"]}
+        ]
+    },
+    {
+        "title": "色振り分け",
+        "description": "表示された物が何色なのかで振り分けよう！\n\n※一般的に認識されている色",
+        "textsize": 10,
+        "guide": {
+            "a": "赤",
+            "b": "青",
+            "c": "黄",
+            "d": "緑"
+        },
+        "content": [
+            {"item": "りんご", "anser": ["a"]},
+            {"item": "さくらんぼ", "anser": ["a"]},
+            {"item": "海", "anser": ["b"]},
+            {"item": "レモン", "anser": ["c"]},
+            {"item": "きゅうり", "anser": ["d"]},
+            {"item": "抹茶", "anser": ["d"]},
+            {"item": "ピーマン", "anser": ["a","c","d"]},
+            {"item": "いちご", "anser": ["a","d"]},
+            {"item": "確定申告\nにある色", "anser": ["b"]},
+            {"item": "どん兵衛\n天ぷらそば", "anser": ["a"]},
+            {"item": "どん兵衛\nきつねうどん", "anser": ["d"]},
+            {"item": "東京メトロ\n丸ノ内線", "anser": ["a"]},
+            {"item": "都営地下鉄\n三田線", "anser": ["b"]},
+            {"item": "JR山手線", "anser": ["d"]},
+            {"item": "道路標識\n「指定方向外進行禁止」\nの色", "anser": ["b"]},
+            {"item": "道路標識\n「車両進入禁止」\nの色", "anser": ["a"]}
+        ]
+    }
+]

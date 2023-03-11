@@ -1,0 +1,59 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "yarn run dev",
+            "detail": "開発プレビュー用のサーバーを立ち上げます",
+            "icon": {
+                "color": "terminal.ansiYellow",
+                "id": "run-all"
+            },
+            "type": "process",
+            "command": "yarn",
+            "args": ["run", "dev"],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "clear": true,
+                "echo": true
+            },
+            "problemMatcher": [],
+        },
+        {
+            "label": "yarn run build",
+            "detail": "本番用ファイルをdistフォルダに出力します",
+            "icon": {
+                "color": "terminal.ansiBlue",
+                "id": "package"
+            },
+            "type": "process",
+            "command": "yarn",
+            "args": ["run", "build"],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "clear": true,
+                "echo": true
+            },
+            "problemMatcher": [],
+        },
+        {
+            "label": "yarn run preview",
+            "detail": "本番用ファイルをdistフォルダに出力します",
+            "icon": {
+                "color": "terminal.ansiMagenta",
+                "id": "window"
+            },
+            "type": "process",
+            "command": "yarn",
+            "args": ["run", "preview"],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "clear": true,
+                "echo": true
+            },
+            "problemMatcher": [],
+        },
+    ]
+}
