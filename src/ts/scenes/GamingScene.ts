@@ -43,9 +43,9 @@ interface TextObjects {
     guideD?: Phaser.GameObjects.Text;
 }
 
-interface ImageObjects {
-    bg?: Phaser.GameObjects.Image;
-}
+// interface ImageObjects {
+//     bg?: Phaser.GameObjects.Image;
+// }
 
 
 export default class GamingScene extends Phaser.Scene {
@@ -59,7 +59,7 @@ export default class GamingScene extends Phaser.Scene {
     
     private textConfigs: TextConfigs | undefined;
     private texts: TextObjects;
-    private images: ImageObjects;
+    // private images: ImageObjects;
     private swipeInput: Swipe | undefined;
     private gameThemes: GameTheme[] | undefined;
     private gameState: GameState;
@@ -70,13 +70,14 @@ export default class GamingScene extends Phaser.Scene {
     private nowContentIndex: number;
     private nowUserPoint: number;
     private numgen: SgpjNumberGenerator;
+    private bgVideoKey: string;
     
     
     constructor() {
         super({ key: 'GamingScene', active: false });
         this.textConfigs = undefined;
         this.texts = {};
-        this.images = {};
+        // this.images = {};
         this.swipeInput = undefined;
         this.swipeDirection = undefined;
         this.timeCounter = 0;
@@ -87,6 +88,7 @@ export default class GamingScene extends Phaser.Scene {
         this.nowUserPoint = 0;
         this.anim = new SgpjAnimAssist();
         this.numgen = new SgpjNumberGenerator();
+        this.bgVideoKey = '';
     }
     
     init(data: any) {
@@ -218,7 +220,9 @@ export default class GamingScene extends Phaser.Scene {
                 },
             },
         }
-        
+        // 背景動画
+        this.bgVideoKey = 'bg' + this.scene.key;
+        this.load.video(this.bgVideoKey, './assets/videos/bgvideo01.mp4', 'loadeddata', false, true);
     }
     
     
@@ -230,9 +234,16 @@ export default class GamingScene extends Phaser.Scene {
         }
         
         // 背景の配置
-        this.images.bg = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'bg01');
+        // this.images.bg = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'bg01');
+        // const ime = new SgpjImageEditor();
+        // this.images.bg.setScale(ime.imageCoverScaler(this.images.bg, this));
+        
+        // 背景動画の配置と再生
+        const bgVideo = this.add.video(this.sys.canvas.width / 2, this.sys.canvas.height / 2, this.bgVideoKey);
         const ime = new SgpjImageEditor();
-        this.images.bg.setScale(ime.imageCoverScaler(this.images.bg, this));
+        bgVideo.setScale(ime.imageCoverScaler(bgVideo, this));
+        bgVideo.play(true);
+        
         
         // ポイントリセット・状態のセット
         this.nowUserPoint = 0;
@@ -414,6 +425,7 @@ export default class GamingScene extends Phaser.Scene {
                     this.texts.timer.setText('');
                     this.swipeDirection = undefined;
                     this.gameState = 'Finish';
+                    this.cameras.main.fadeOut(20, 0, 0, 0);
                     this.scene.transition({
                         target: 'FinishScene',
                         data: {

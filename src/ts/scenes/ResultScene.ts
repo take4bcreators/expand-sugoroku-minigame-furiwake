@@ -22,27 +22,29 @@ interface TextObjects {
     button1?: Phaser.GameObjects.Text;
 }
 
-interface ImageObjects {
-    bg?: Phaser.GameObjects.Image;
-}
+// interface ImageObjects {
+//     bg?: Phaser.GameObjects.Image;
+// }
 
 
 export default class ResultScene extends Phaser.Scene {
     
     private textConfigs: TextConfigs | undefined;
     private texts: TextObjects;
-    private images: ImageObjects;
+    // private images: ImageObjects;
     private userPoint: number;
     private userRank: string;
+    private bgVideoKey: string;
     
     
     constructor() {
         super({ key: 'ResultScene', active: false });
         this.textConfigs = undefined;
         this.texts = {};
-        this.images = {};
+        // this.images = {};
         this.userPoint = -1;
         this.userRank = '';
+        this.bgVideoKey = '';
     }
     
     
@@ -133,6 +135,11 @@ export default class ResultScene extends Phaser.Scene {
             },
         }
         
+        // 背景動画
+        this.bgVideoKey = 'bg' + this.scene.key;
+        console.log(this.bgVideoKey);
+        this.load.video(this.bgVideoKey, './assets/videos/bgvideo01.mp4', 'loadeddata', false, true);
+        
         // jsonファイルの読込
         this.load.json('rankinfo', './config/rankinfo.json');
     }
@@ -144,10 +151,17 @@ export default class ResultScene extends Phaser.Scene {
             return;
         }
         
-        // 背景の配置
-        this.images.bg = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'bg01');
+        // // 背景の配置
+        // this.images.bg = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'bg01');
+        // const ime = new SgpjImageEditor();
+        // this.images.bg.setScale(ime.imageCoverScaler(this.images.bg, this));
+        
+        // 背景動画の配置と再生
+        const bgVideo = this.add.video(this.sys.canvas.width / 2, this.sys.canvas.height / 2, this.bgVideoKey);
         const ime = new SgpjImageEditor();
-        this.images.bg.setScale(ime.imageCoverScaler(this.images.bg, this));
+        bgVideo.setScale(ime.imageCoverScaler(bgVideo, this));
+        bgVideo.play(true);
+        
         
         // ランクの判定
         const rankInfo: RankInfo = this.cache.json.get('rankinfo');
@@ -170,6 +184,7 @@ export default class ResultScene extends Phaser.Scene {
         this.texts.button1 = this.make.text(this.textConfigs.button1)
         .setInteractive()
         .on('pointerdown', (_pointer: Phaser.Input.Pointer) => {
+            this.cameras.main.fadeOut(1000, 0, 0, 0);
             this.scene.transition({
                 target: 'TitleScene',
                 data: {},

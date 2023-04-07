@@ -12,9 +12,9 @@ interface TextObjects {
     center?: Phaser.GameObjects.Text;
 }
 
-interface ImageObjects {
-    bg?: Phaser.GameObjects.Image;
-}
+// interface ImageObjects {
+//     bg?: Phaser.GameObjects.Image;
+// }
 
 
 export default class DisplayThemeScene extends Phaser.Scene {
@@ -22,15 +22,27 @@ export default class DisplayThemeScene extends Phaser.Scene {
     private gameThemeNo: number;
     private textConfigs: TextConfigs | undefined;
     private texts: TextObjects;
-    private images: ImageObjects;
-    
+    // private images: ImageObjects;
+    private bgVideoKey: string;
     
     constructor() {
         super({ key: 'DisplayThemeScene', active: false });
         this.gameThemeNo = -1;
         this.textConfigs = undefined;
         this.texts = {};
-        this.images = {};
+        // this.images = {};
+        this.bgVideoKey = '';
+    }
+    
+    
+    init (): void {
+        this.events.on(Phaser.Scenes.Events.TRANSITION_INIT, () => {
+          this.cameras.main.setAlpha(0);
+        });
+        this.events.on(Phaser.Scenes.Events.TRANSITION_COMPLETE, () => {
+          this.cameras.main.setAlpha(1);
+          this.cameras.main.fadeIn(1000, 0, 0, 0);
+        });
     }
     
     
@@ -52,6 +64,10 @@ export default class DisplayThemeScene extends Phaser.Scene {
             },
         }
         
+        // 背景動画
+        this.bgVideoKey = 'bg' + this.scene.key;
+        this.load.video(this.bgVideoKey, './assets/videos/bgvideo01.mp4', 'loadeddata', false, true);
+        
         // jsonファイルの読込
         this.load.json('gametheme', './assets/json/gametheme.json');
     }
@@ -63,10 +79,17 @@ export default class DisplayThemeScene extends Phaser.Scene {
             return;
         }
         
-        // 背景の配置
-        this.images.bg = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'bg01');
+        // // 背景の配置
+        // this.images.bg = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'bg01');
+        // const ime = new SgpjImageEditor();
+        // this.images.bg.setScale(ime.imageCoverScaler(this.images.bg, this));
+        
+        // 背景動画の配置と再生
+        const bgVideo = this.add.video(this.sys.canvas.width / 2, this.sys.canvas.height / 2, this.bgVideoKey);
         const ime = new SgpjImageEditor();
-        this.images.bg.setScale(ime.imageCoverScaler(this.images.bg, this));
+        bgVideo.setScale(ime.imageCoverScaler(bgVideo, this));
+        bgVideo.play(true);
+        
         
         // ゲームテーマの決定
         const gameThemes: GameTheme[] = this.cache.json.get('gametheme');
@@ -91,12 +114,13 @@ export default class DisplayThemeScene extends Phaser.Scene {
         .setText(displayText)
         .setInteractive()
         .on('pointerdown', (_pointer: Phaser.Input.Pointer) => {
+            this.cameras.main.fadeOut(200, 0, 0, 0);
             this.scene.transition({
                 target: 'CountDownScene',
                 data: {
                     gameThemeNo: this.gameThemeNo,
                 },
-                duration: 100,
+                duration: 200,
                 onUpdate: (_progress: number) => {},
             });
         });
