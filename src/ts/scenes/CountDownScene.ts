@@ -26,6 +26,7 @@ export default class CountDownScene extends Phaser.Scene {
     private timeCounter: number;
     private gameThemeNo: number;
     private bgVideoKey: string;
+    private numberImageBaseScale: number;
     
     
     constructor() {
@@ -36,6 +37,7 @@ export default class CountDownScene extends Phaser.Scene {
         this.timeCounter = 0;
         this.gameThemeNo = -1;
         this.bgVideoKey = '';
+        this.numberImageBaseScale = 1.0;
     }
     
     
@@ -97,10 +99,9 @@ export default class CountDownScene extends Phaser.Scene {
         this.texts.loading = this.make.text(this.textConfigs.loading);
         
         // 数字の配置
-        this.images.number = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'num1')
-        .setDisplaySize(300, 300)
-        .setVisible(false)
-        ;
+        this.images.number = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'num1');
+        this.numberImageBaseScale = ime.getScaleFactorFromVmin(30, this.images.number, this);
+        this.images.number.setScale(this.numberImageBaseScale).setVisible(false);
         
         // カウントを初期化して実行
         this.timeCounter = this.COUNT_START_TIME;
@@ -133,7 +134,7 @@ export default class CountDownScene extends Phaser.Scene {
                     this.texts.loading.setText('');
                     this.images.number.setTexture('num' + this.timeCounter)
                     .setVisible(true)
-                    .setScale(0.1)
+                    .setScale(this.numberImageBaseScale * 0.1)
                     ;
                 }
                 this.timeCounter--;
@@ -145,7 +146,7 @@ export default class CountDownScene extends Phaser.Scene {
     update(_time: number, _delta: number): void {
         if (this.images.number !== undefined) {
             const nowScale = this.images.number.scale;
-            if (nowScale <= 0.5) {
+            if (nowScale <= (this.numberImageBaseScale * 0.6)) {
                 this.images.number.setScale(nowScale + 0.08);
             } else {
                 this.images.number.setScale(nowScale + 0.01);

@@ -105,13 +105,7 @@ export default class TitleScene extends Phaser.Scene {
         
         // タイトルの配置
         this.images.title = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'title');
-        // 50vmin の大きさにする
-        let scaleFactor = 0;
-        if (this.sys.canvas.width < this.sys.canvas.height) {
-            scaleFactor = (this.sys.canvas.width / 2) / this.images.title.width;
-        } else {
-            scaleFactor = (this.sys.canvas.height / 2) / this.images.title.height;
-        }
+        const scaleFactor = ime.getScaleFactorFromVmin(50, this.images.title, this);
         this.images.title.setDisplaySize(this.images.title.width * scaleFactor, this.images.title.height * scaleFactor);
         
         this.images.title.setInteractive().on('pointerdown', (_pointer: Phaser.Input.Pointer) => {
@@ -152,6 +146,14 @@ export default class TitleScene extends Phaser.Scene {
         //     });
         // });
         // ---------------------------------------------
+        
+        
+        // const num = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'num1');
+        // const baseSizeScale = ime.getScaleFactorFromVmin(30, num, this, true);
+        // num.setDisplaySize(num.displayWidth * baseSizeScale, num.displayHeight * baseSizeScale);
+        // const sf = 1.0;
+        // num.setScale(baseSizeScale * sf);
+        
         
     }
     
