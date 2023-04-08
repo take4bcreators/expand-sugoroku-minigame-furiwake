@@ -20,6 +20,24 @@
             "problemMatcher": [],
         },
         {
+            "label": "yarn run dev [hostオプション付き]",
+            "detail": "外部アクセス可能な開発プレビュー用のサーバーを立ち上げます",
+            "icon": {
+                "color": "terminal.ansiYellow",
+                "id": "run-all"
+            },
+            "type": "process",
+            "command": "yarn",
+            "args": ["run", "dev", "--host"],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "clear": true,
+                "echo": true
+            },
+            "problemMatcher": [],
+        },
+        {
             "label": "yarn run build",
             "detail": "本番用ファイルをdistフォルダに出力します",
             "icon": {
