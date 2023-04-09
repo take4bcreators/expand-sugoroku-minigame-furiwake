@@ -7,6 +7,7 @@ export const MyFonts = {
             'Noto Sans JP:100,300,400,500,700,900',
             'Kaisei Opti:400',
             'Hind:300,400,500,600',     // 数字用フォント
+            'Exo 2:300,400,500,600',    // PRESS START 用
         ],
     },
     google: {
@@ -15,5 +16,6 @@ export const MyFonts = {
         NotoSansJP: '"Noto Sans JP"',
         KaiseiOpti: '"Kaisei Opti"',
         Hind: '"Hind"',
+        Exo2: '"Exo 2"',
     },
 }

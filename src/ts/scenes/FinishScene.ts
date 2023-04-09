@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { MyFonts } from '../interface/MyFonts';
-import { SgpjImageEditor } from '../module/SgpjImageEditor';
+// import { SgpjImageEditor } from '../module/SgpjImageEditor';
 
 
 interface TextConfigs {
@@ -23,7 +23,7 @@ export default class FinishScene extends Phaser.Scene {
     private texts: TextObjects;
     // private images: ImageObjects;
     private userPoint: number;
-    private bgVideoKey: string;
+    // private bgVideoKey: string;
     
     constructor() {
         super({ key: 'FinishScene', active: false });
@@ -31,7 +31,7 @@ export default class FinishScene extends Phaser.Scene {
         this.texts = {};
         // this.images = {};
         this.userPoint = -1;
-        this.bgVideoKey = '';
+        // this.bgVideoKey = '';
     }
     
     
@@ -55,9 +55,9 @@ export default class FinishScene extends Phaser.Scene {
                 },
             },
         }
-        // 背景動画
-        this.bgVideoKey = 'bg' + this.scene.key;
-        this.load.video(this.bgVideoKey, './assets/videos/bgvideo01.mp4', 'loadeddata', false, true);
+        // // 背景動画
+        // this.bgVideoKey = 'bg' + this.scene.key;
+        // this.load.video(this.bgVideoKey, './assets/videos/bgvideo01.mp4', 'loadeddata', false, true);
     }
     
     
@@ -72,18 +72,18 @@ export default class FinishScene extends Phaser.Scene {
         // const ime = new SgpjImageEditor();
         // this.images.bg.setScale(ime.imageCoverScaler(this.images.bg, this));
         
-        // 背景動画の配置と再生
-        const bgVideo = this.add.video(this.sys.canvas.width / 2, this.sys.canvas.height / 2, this.bgVideoKey);
-        const ime = new SgpjImageEditor();
-        bgVideo.setScale(ime.imageCoverScaler(bgVideo, this));
-        bgVideo.play(true);
+        // // 背景動画の配置と再生
+        // const bgVideo = this.add.video(this.sys.canvas.width / 2, this.sys.canvas.height / 2, this.bgVideoKey);
+        // const ime = new SgpjImageEditor();
+        // bgVideo.setScale(ime.imageCoverScaler(bgVideo, this));
+        // bgVideo.play(true);
         
         
         // 情報表示用文字
         this.texts.finish = this.make.text(this.textConfigs.finish);
         
         this.time.delayedCall(this.NEXT_SCENE_MOVE_TIME, () => {
-            this.cameras.main.fadeOut(20, 0, 0, 0);
+            // this.cameras.main.fadeOut(20, 0, 0, 0);
             this.scene.transition({
                 target: 'ResultScene',
                 data: {

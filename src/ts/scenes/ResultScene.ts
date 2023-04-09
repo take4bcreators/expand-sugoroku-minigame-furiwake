@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { RankInfo } from '../interface/RankInfo'
 import { MyFonts } from '../interface/MyFonts'; 
-import { SgpjImageEditor } from '../module/SgpjImageEditor';
+// import { SgpjImageEditor } from '../module/SgpjImageEditor';
 
 
 interface TextConfigs {
@@ -34,7 +34,7 @@ export default class ResultScene extends Phaser.Scene {
     // private images: ImageObjects;
     private userPoint: number;
     private userRank: string;
-    private bgVideoKey: string;
+    // private bgVideoKey: string;
     
     
     constructor() {
@@ -44,7 +44,7 @@ export default class ResultScene extends Phaser.Scene {
         // this.images = {};
         this.userPoint = -1;
         this.userRank = '';
-        this.bgVideoKey = '';
+        // this.bgVideoKey = '';
     }
     
     
@@ -135,10 +135,10 @@ export default class ResultScene extends Phaser.Scene {
             },
         }
         
-        // 背景動画
-        this.bgVideoKey = 'bg' + this.scene.key;
-        console.log(this.bgVideoKey);
-        this.load.video(this.bgVideoKey, './assets/videos/bgvideo01.mp4', 'loadeddata', false, true);
+        // // 背景動画
+        // this.bgVideoKey = 'bg' + this.scene.key;
+        // console.log(this.bgVideoKey);
+        // this.load.video(this.bgVideoKey, './assets/videos/bgvideo01.mp4', 'loadeddata', false, true);
         
         // jsonファイルの読込
         this.load.json('rankinfo', './config/rankinfo.json');
@@ -156,11 +156,11 @@ export default class ResultScene extends Phaser.Scene {
         // const ime = new SgpjImageEditor();
         // this.images.bg.setScale(ime.imageCoverScaler(this.images.bg, this));
         
-        // 背景動画の配置と再生
-        const bgVideo = this.add.video(this.sys.canvas.width / 2, this.sys.canvas.height / 2, this.bgVideoKey);
-        const ime = new SgpjImageEditor();
-        bgVideo.setScale(ime.imageCoverScaler(bgVideo, this));
-        bgVideo.play(true);
+        // // 背景動画の配置と再生
+        // const bgVideo = this.add.video(this.sys.canvas.width / 2, this.sys.canvas.height / 2, this.bgVideoKey);
+        // const ime = new SgpjImageEditor();
+        // bgVideo.setScale(ime.imageCoverScaler(bgVideo, this));
+        // bgVideo.play(true);
         
         
         // ランクの判定
@@ -184,7 +184,7 @@ export default class ResultScene extends Phaser.Scene {
         this.texts.button1 = this.make.text(this.textConfigs.button1)
         .setInteractive()
         .on('pointerdown', (_pointer: Phaser.Input.Pointer) => {
-            this.cameras.main.fadeOut(1000, 0, 0, 0);
+            // this.cameras.main.fadeOut(1000, 0, 0, 0);
             this.scene.transition({
                 target: 'TitleScene',
                 data: {},

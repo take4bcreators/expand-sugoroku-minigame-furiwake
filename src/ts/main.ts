@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import LoadingScene from './scenes/LoadingScene';
 import TitleScene from './scenes/TitleScene';
 import DisplayThemeScene from './scenes/DisplayThemeScene';
 import CountDownScene from './scenes/CountDownScene';
@@ -17,6 +18,7 @@ const config: Phaser.Types.Core.GameConfig = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY // PC用左右中央揃え
     },
     scene: [
+        LoadingScene,
         TitleScene,
         DisplayThemeScene,
         CountDownScene,
