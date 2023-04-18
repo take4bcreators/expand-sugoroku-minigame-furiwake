@@ -25,7 +25,6 @@ export default class CountDownScene extends Phaser.Scene {
     private images: ImageObjects;
     private timeCounter: number;
     private gameThemeNo: number;
-    // private bgVideoKey: string;
     private numberImageBaseScale: number;
     
     
@@ -36,7 +35,6 @@ export default class CountDownScene extends Phaser.Scene {
         this.images = {};
         this.timeCounter = 0;
         this.gameThemeNo = -1;
-        // this.bgVideoKey = '';
         this.numberImageBaseScale = 1.0;
     }
     
@@ -44,13 +42,6 @@ export default class CountDownScene extends Phaser.Scene {
     init(data: any) {
         // 前シーンからゲームテーマ情報を受け取る
         this.gameThemeNo = data['gameThemeNo'];
-        // this.events.on(Phaser.Scenes.Events.TRANSITION_INIT, () => {
-        //   this.cameras.main.setAlpha(0);
-        // });
-        // this.events.on(Phaser.Scenes.Events.TRANSITION_COMPLETE, () => {
-        //   this.cameras.main.setAlpha(1);
-        //   this.cameras.main.fadeIn(100, 0, 0, 0);
-        // });
     }
     
     
@@ -70,10 +61,6 @@ export default class CountDownScene extends Phaser.Scene {
                 },
             },
         }
-        
-        // 背景動画
-        // this.bgVideoKey = 'bg' + this.scene.key;
-        // this.load.video(this.bgVideoKey, './assets/videos/bgvideo01.mp4', 'loadeddata', false, true);
     }
     
     
@@ -83,23 +70,13 @@ export default class CountDownScene extends Phaser.Scene {
             return;
         }
         
-        // // 背景の配置
-        // this.images.bg = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'bg01');
-        // const ime = new SgpjImageEditor();
-        // this.images.bg.setScale(ime.imageCoverScaler(this.images.bg, this));
-        
-        // 背景動画の配置と再生
-        // const bgVideo = this.add.video(this.sys.canvas.width / 2, this.sys.canvas.height / 2, this.bgVideoKey);
-        const ime = new SgpjImageEditor();
-        // bgVideo.setScale(ime.imageCoverScaler(bgVideo, this));
-        // bgVideo.play(true);
-        
         
         // ローディング表示用テキストの配置
         this.texts.loading = this.make.text(this.textConfigs.loading);
         
         // 数字の配置
         this.images.number = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'num1');
+        const ime = new SgpjImageEditor();
         this.numberImageBaseScale = ime.getScaleFactorFromVmin(30, this.images.number, this);
         this.images.number.setScale(this.numberImageBaseScale).setVisible(false);
         

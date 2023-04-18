@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 // import WebFontLoader from 'phaser3-rex-plugins/plugins/webfontloader.js';   // WEBフォント使用のためのインポート
 import { MyFonts } from '../interface/MyFonts'; 
 import { SgpjImageEditor } from "../module/SgpjImageEditor";
+import LoadingScene from './LoadingScene';
 
 
 interface TextConfigs {
@@ -99,6 +100,10 @@ export default class TitleScene extends Phaser.Scene {
             console.error('this.textConfigs is ' + this.textConfigs);
             return;
         }
+        
+        // 背景用の黒の図形を削除
+        const loadingScene = this.scene.get('LoadingScene') as LoadingScene;
+        loadingScene.hideBgGraphic();
         
         // タイトルの配置
         this.images.title = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'title');

@@ -21,6 +21,7 @@ interface TextConfigs {
 export default class LoadingScene extends Phaser.Scene {
     
     private textConfigs: TextConfigs | undefined;
+    private bgGraphic: Phaser.GameObjects.Graphics | undefined;
     // private images: ImageObjects;
     private bgVideoKey: string;
     
@@ -28,6 +29,7 @@ export default class LoadingScene extends Phaser.Scene {
     constructor() {
         super({ key: 'LoadingScene', active: true });
         this.textConfigs = undefined;
+        this.bgGraphic = undefined;
         // this.texts = {};
         // this.images = {};
         this.bgVideoKey = '';
@@ -78,6 +80,9 @@ export default class LoadingScene extends Phaser.Scene {
             return;
         }
         
+        
+
+        
         // // 背景の配置
         // this.images.bg = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'bg01');
         // const ime = new SgpjImageEditor();
@@ -90,9 +95,17 @@ export default class LoadingScene extends Phaser.Scene {
         bgVideo.play(true);
         
         
+        // 背景用の黒の図形を配置
+        this.bgGraphic = this.add.graphics();
+        this.bgGraphic.fillStyle(0x000000, 0.5).fillRect(0, 0, this.sys.canvas.width, this.sys.canvas.height);
+        this.bgGraphic.setAlpha(0);
+        
+        
         this.time.delayedCall(300, () => {
             this.scene.launch('TitleScene');
         });
+        
+        
         
         
         // ----------------- DEBUG ---------------------
@@ -121,6 +134,26 @@ export default class LoadingScene extends Phaser.Scene {
     
     
     update(_time: number, _delta: number): void {
+    }
+    
+    visibleBgGraphic() {
+        // 背景用の黒の図形を配置
+        // this.bgGraphic = this.add.graphics();
+        // this.bgGraphic.fillStyle(0x000000, 0.5).fillRect(0, 0, this.sys.canvas.width, this.sys.canvas.height);
+        if (typeof this.bgGraphic === 'undefined') {
+            console.error('this.bgGraphic is undefined');
+            return;
+        }
+        this.bgGraphic.setAlpha(1);
+    }
+    
+    hideBgGraphic() {
+        // 背景用の黒の図形を配置
+        if (typeof this.bgGraphic === 'undefined') {
+            console.error('this.bgGraphic is undefined');
+            return;
+        }
+        this.bgGraphic.setAlpha(0);
     }
     
 }
