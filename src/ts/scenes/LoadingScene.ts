@@ -96,7 +96,7 @@ export default class LoadingScene extends Phaser.Scene {
                 text: undefined,
                 origin: {x: 0.5, y: 0.5},
                 style: {
-                    fontFamily: MyFonts.google.TrainOne,
+                    fontFamily: MyFonts.google.RampartOne,
                     fontSize: 6 * window.devicePixelRatio + 'vmin',
                     fontStyle: '400',
                     color: 'white',
@@ -110,7 +110,7 @@ export default class LoadingScene extends Phaser.Scene {
                 text: undefined,
                 origin: {x: 0.5, y: 0.5},
                 style: {
-                    fontFamily: MyFonts.google.TrainOne,
+                    fontFamily: MyFonts.google.RampartOne,
                     fontSize: 6 * window.devicePixelRatio + 'vmin',
                     fontStyle: '400',
                     color: 'white',
@@ -124,7 +124,7 @@ export default class LoadingScene extends Phaser.Scene {
                 text: undefined,
                 origin: {x: 0.5, y: 0.5},
                 style: {
-                    fontFamily: MyFonts.google.TrainOne,
+                    fontFamily: MyFonts.google.RampartOne,
                     fontSize: 6 * window.devicePixelRatio + 'vmin',
                     fontStyle: '400',
                     color: 'white',
@@ -138,7 +138,7 @@ export default class LoadingScene extends Phaser.Scene {
                 text: undefined,
                 origin: {x: 0.5, y: 0.5},
                 style: {
-                    fontFamily: MyFonts.google.TrainOne,
+                    fontFamily: MyFonts.google.RampartOne,
                     fontSize: 6 * window.devicePixelRatio + 'vmin',
                     fontStyle: '400',
                     color: 'white',

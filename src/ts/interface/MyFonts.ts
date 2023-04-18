@@ -10,6 +10,7 @@ export const MyFonts = {
             'Hind:300,400,500,600',     // 数字用フォント
             'RocknRoll One:400',
             'Share Tech Mono:400',          // 結果画面 用
+            'Rampart One:400',          // 結果画面 用
         ],
     },
     google: {
@@ -17,6 +18,8 @@ export const MyFonts = {
         Exo2: '"Exo 2"',
         /** 方向ガイド用 */
         TrainOne: '"Train One"',
+        /** 方向ガイド用2 */
+        RampartOne: '"Rampart One"',
         MPLUS1p: '"M PLUS 1p"',
         NotoSansJP: '"Noto Sans JP"',
         KaiseiOpti: '"Kaisei Opti"',
