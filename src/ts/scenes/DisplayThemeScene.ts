@@ -9,19 +9,19 @@ import WebFontLoader from 'phaser3-rex-plugins/plugins/webfontloader.js';   // W
 interface TextConfigs {
     title: Phaser.Types.GameObjects.Text.TextConfig;
     desc: Phaser.Types.GameObjects.Text.TextConfig;
-    leftGuide: Phaser.Types.GameObjects.Text.TextConfig;
-    upGuide: Phaser.Types.GameObjects.Text.TextConfig;
-    rightGuide: Phaser.Types.GameObjects.Text.TextConfig;
-    downGuide: Phaser.Types.GameObjects.Text.TextConfig;
+    // leftGuide: Phaser.Types.GameObjects.Text.TextConfig;
+    // upGuide: Phaser.Types.GameObjects.Text.TextConfig;
+    // rightGuide: Phaser.Types.GameObjects.Text.TextConfig;
+    // downGuide: Phaser.Types.GameObjects.Text.TextConfig;
 }
 
 interface TextObjects {
     title?: Phaser.GameObjects.Text;
     desc?: Phaser.GameObjects.Text;
-    leftGuide?: Phaser.GameObjects.Text;
-    upGuide?: Phaser.GameObjects.Text;
-    rightGuide?: Phaser.GameObjects.Text;
-    downGuide?: Phaser.GameObjects.Text;
+    // leftGuide?: Phaser.GameObjects.Text;
+    // upGuide?: Phaser.GameObjects.Text;
+    // rightGuide?: Phaser.GameObjects.Text;
+    // downGuide?: Phaser.GameObjects.Text;
 }
 
 
@@ -70,70 +70,70 @@ export default class DisplayThemeScene extends Phaser.Scene {
                     wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
                 },
             },
-            leftGuide: {
-                // x: this.sys.canvas.width / 8,
-                // y: this.sys.canvas.height / 2,
-                x: 0,
-                y: 0,
-                text: undefined,
-                origin: {x: 0.5, y: 0.5},
-                style: {
-                    fontFamily: MyFonts.google.TrainOne,
-                    fontSize: 6 * window.devicePixelRatio + 'vmin',
-                    fontStyle: '400',
-                    color: 'white',
-                    align: 'center',
-                    wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
-                },
-            },
-            upGuide: {
-                // x: this.sys.canvas.width / 2,
-                // y: this.sys.canvas.height / 8,
-                x: 0,
-                y: 0,
-                text: undefined,
-                origin: {x: 0.5, y: 0.5},
-                style: {
-                    fontFamily: MyFonts.google.TrainOne,
-                    fontSize: 6 * window.devicePixelRatio + 'vmin',
-                    fontStyle: '400',
-                    color: 'white',
-                    align: 'center',
-                    wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
-                },
-            },
-            rightGuide: {
-                // x: this.sys.canvas.width / 8 * 7,
-                // y: this.sys.canvas.height / 2,
-                x: 0,
-                y: 0,
-                text: undefined,
-                origin: {x: 0.5, y: 0.5},
-                style: {
-                    fontFamily: MyFonts.google.TrainOne,
-                    fontSize: 6 * window.devicePixelRatio + 'vmin',
-                    fontStyle: '400',
-                    color: 'white',
-                    align: 'center',
-                    wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
-                },
-            },
-            downGuide: {
-                // x: this.sys.canvas.width / 2,
-                // y: this.sys.canvas.height / 8 * 7,
-                x: 0,
-                y: 0,
-                text: undefined,
-                origin: {x: 0.5, y: 0.5},
-                style: {
-                    fontFamily: MyFonts.google.TrainOne,
-                    fontSize: 6 * window.devicePixelRatio + 'vmin',
-                    fontStyle: '400',
-                    color: 'white',
-                    align: 'center',
-                    wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
-                },
-            },
+            // leftGuide: {
+            //     // x: this.sys.canvas.width / 8,
+            //     // y: this.sys.canvas.height / 2,
+            //     x: 0,
+            //     y: 0,
+            //     text: undefined,
+            //     origin: {x: 0.5, y: 0.5},
+            //     style: {
+            //         fontFamily: MyFonts.google.TrainOne,
+            //         fontSize: 6 * window.devicePixelRatio + 'vmin',
+            //         fontStyle: '400',
+            //         color: 'white',
+            //         align: 'center',
+            //         wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
+            //     },
+            // },
+            // upGuide: {
+            //     // x: this.sys.canvas.width / 2,
+            //     // y: this.sys.canvas.height / 8,
+            //     x: 0,
+            //     y: 0,
+            //     text: undefined,
+            //     origin: {x: 0.5, y: 0.5},
+            //     style: {
+            //         fontFamily: MyFonts.google.TrainOne,
+            //         fontSize: 6 * window.devicePixelRatio + 'vmin',
+            //         fontStyle: '400',
+            //         color: 'white',
+            //         align: 'center',
+            //         wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
+            //     },
+            // },
+            // rightGuide: {
+            //     // x: this.sys.canvas.width / 8 * 7,
+            //     // y: this.sys.canvas.height / 2,
+            //     x: 0,
+            //     y: 0,
+            //     text: undefined,
+            //     origin: {x: 0.5, y: 0.5},
+            //     style: {
+            //         fontFamily: MyFonts.google.TrainOne,
+            //         fontSize: 6 * window.devicePixelRatio + 'vmin',
+            //         fontStyle: '400',
+            //         color: 'white',
+            //         align: 'center',
+            //         wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
+            //     },
+            // },
+            // downGuide: {
+            //     // x: this.sys.canvas.width / 2,
+            //     // y: this.sys.canvas.height / 8 * 7,
+            //     x: 0,
+            //     y: 0,
+            //     text: undefined,
+            //     origin: {x: 0.5, y: 0.5},
+            //     style: {
+            //         fontFamily: MyFonts.google.TrainOne,
+            //         fontSize: 6 * window.devicePixelRatio + 'vmin',
+            //         fontStyle: '400',
+            //         color: 'white',
+            //         align: 'center',
+            //         wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
+            //     },
+            // },
         }
         
         
@@ -151,6 +151,7 @@ export default class DisplayThemeScene extends Phaser.Scene {
         // 背景用の黒の図形を配置
         const loadingScene = this.scene.get('LoadingScene') as LoadingScene;
         loadingScene.visibleBgGraphic();
+        loadingScene.visibleLogoIcon();
         
         // ゲームテーマの決定
         const gameThemes: GameTheme[] = this.cache.json.get('gametheme');
@@ -186,129 +187,18 @@ export default class DisplayThemeScene extends Phaser.Scene {
             });
         });
         
-        
-        // const arrowLeft = this.add.graphics();
-        // arrowLeft.fillStyle(0xffffff, 1).fillTriangle(0, -25, -30, 25, 30, 25);
-        // arrowLeft.setRotation(Math.PI * -0.5);
-        // arrowLeft.setScale(0.5);
-        // const guideLeft = this.make.text(this.textConfigs.leftGuide).setText(themeGuide.a);
-        // arrowLeft.setPosition(guideLeft.width * 1.5, 0);
-        // const containerLeft = this.add.container(0, 0);
-        // containerLeft.add(guideLeft);
-        // containerLeft.add(arrowLeft);
-        // containerLeft.setPosition(this.sys.canvas.width / 8, this.sys.canvas.height / 2);
-        // containerLeft.setAlpha(0.3);
-        
-        // const arrowUp = this.add.graphics();
-        // arrowUp.fillStyle(0xffffff, 1).fillTriangle(0, -25, -30, 25, 30, 25);
-        // arrowUp.setRotation(Math.PI * 0);
-        // arrowUp.setScale(0.5);
-        // const guideUp = this.make.text(this.textConfigs.upGuide).setText(themeGuide.b);
-        // arrowUp.setPosition(0, guideUp.height * 1);
-        // const containerUp = this.add.container(0, 0);
-        // containerUp.add(guideUp);
-        // containerUp.add(arrowUp);
-        // containerUp.setPosition(this.sys.canvas.width / 2, this.sys.canvas.height / 8);
-        // containerUp.setAlpha(0.3);
-        
-        // const arrowRight = this.add.graphics();
-        // arrowRight.fillStyle(0xffffff, 1).fillTriangle(0, -25, -30, 25, 30, 25);
-        // arrowRight.setRotation(Math.PI * 0.5);
-        // arrowRight.setScale(0.5);
-        // const guideRight = this.make.text(this.textConfigs.rightGuide).setText(themeGuide.d);
-        // arrowRight.setPosition(guideRight.width * -1.5, 0);
-        // const containerRight = this.add.container(0, 0);
-        // containerRight.add(guideRight);
-        // containerRight.add(arrowRight);
-        // containerRight.setPosition(this.sys.canvas.width / 8 * 7, this.sys.canvas.height / 2);
-        // containerRight.setAlpha(0.3);
-        
-        // const arrowDown = this.add.graphics();
-        // arrowDown.fillStyle(0xffffff, 1).fillTriangle(0, -25, -30, 25, 30, 25);
-        // arrowDown.setRotation(Math.PI * 1);
-        // arrowDown.setScale(0.5);
-        // const guideDown = this.make.text(this.textConfigs.downGuide).setText(themeGuide.c);
-        // arrowDown.setPosition(0, guideDown.height * -1);
-        // const containerDown = this.add.container(0, 0);
-        // containerDown.add(guideDown);
-        // containerDown.add(arrowDown);
-        // containerDown.setPosition(this.sys.canvas.width / 2, this.sys.canvas.height / 8 * 7);
-        // containerDown.setAlpha(0.3);
+        this.tweens.add({
+            targets: this.texts.title,
+            alpha: { from: 0.0, to: 1.0 },
+            scale: { from: 0.0, to: 1.0 },
+            ease: Phaser.Math.Easing.Back.Out,
+            duration: 300,
+            yoyo: false
+        });
         
         
-        type dirsType = 'left' | 'up' | 'right' | 'down';
-        const dirs: dirsType[]  = ['left', 'up', 'right', 'down'];
-        
-        const dirSetting = {
-            left: {
-                rotate: -0.5,
-                textConfig: this.textConfigs.leftGuide,
-                themeGuide: themeGuide.a,
-                guidePosition: {
-                    x: 1.5,
-                    y: 0,
-                },
-                containerPosition: {
-                    x: this.sys.canvas.width / 8,
-                    y: this.sys.canvas.height / 2,
-                },
-            },
-            up: {
-                rotate: 0,
-                textConfig: this.textConfigs.upGuide,
-                themeGuide: themeGuide.b,
-                guidePosition: {
-                    x: 0,
-                    y: 1,
-                },
-                containerPosition: {
-                    x: this.sys.canvas.width / 2,
-                    y: this.sys.canvas.height / 8,
-                },
-            },
-            right: {
-                rotate: 0.5,
-                textConfig: this.textConfigs.rightGuide,
-                themeGuide: themeGuide.d,
-                guidePosition: {
-                    x: -1.5,
-                    y: 0,
-                },
-                containerPosition: {
-                    x: this.sys.canvas.width / 8 * 7,
-                    y: this.sys.canvas.height / 2,
-                },
-            },
-            down: {
-                rotate: 1,
-                textConfig: this.textConfigs.downGuide,
-                themeGuide: themeGuide.c,
-                guidePosition: {
-                    x: 0,
-                    y: -1,
-                },
-                containerPosition: {
-                    x: this.sys.canvas.width / 2,
-                    y: this.sys.canvas.height / 8 * 7,
-                },
-            }
-        }
-        
-        for (const dir of dirs) {
-            const arrow = this.add.graphics();
-            arrow.fillStyle(0xffffff, 1).fillTriangle(0, -25, -30, 25, 30, 25);
-            arrow.setRotation(Math.PI * dirSetting[dir].rotate);
-            arrow.setScale(0.5);
-            const guide = this.make.text(dirSetting[dir].textConfig).setText(dirSetting[dir].themeGuide);
-            arrow.setPosition(guide.width * dirSetting[dir].guidePosition.x, guide.height * dirSetting[dir].guidePosition.y);
-            
-            const container = this.add.container(0, 0);
-            container.add(guide);
-            container.add(arrow);
-            container.setPosition(dirSetting[dir].containerPosition.x, dirSetting[dir].containerPosition.y);
-            container.setAlpha(0.3);
-        }
-        
+        // 各方向のガイドを表示
+        loadingScene.visibleDirGuide(themeGuide);
         
     }
     

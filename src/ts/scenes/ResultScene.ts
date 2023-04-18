@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { RankInfo } from '../interface/RankInfo'
 import { MyFonts } from '../interface/MyFonts'; 
 // import { SgpjImageEditor } from '../module/SgpjImageEditor';
+import LoadingScene from './LoadingScene';
 
 
 interface TextConfigs {
@@ -138,7 +139,11 @@ export default class ResultScene extends Phaser.Scene {
             return;
         }
         
-        // ランクの判定
+        // 各方向のガイドを非表示にする
+        const loadingScene = this.scene.get('LoadingScene') as LoadingScene;
+        loadingScene.hideDirGuide();
+        
+        // ランクを判定する
         const rankInfo: RankInfo = this.cache.json.get('rankinfo');
         if (this.userPoint >= rankInfo.s.point) {
             this.userRank = 'S';
@@ -150,7 +155,7 @@ export default class ResultScene extends Phaser.Scene {
             this.userRank = 'C';
         }
         
-        // テキストの配置
+        // テキストを配置する
         this.texts.pointText1 = this.make.text(this.textConfigs.pointText1).setText(this.userPoint.toString());
         this.texts.pointText2 = this.make.text(this.textConfigs.pointText2);
         this.texts.result = this.make.text(this.textConfigs.result);

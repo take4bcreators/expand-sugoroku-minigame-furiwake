@@ -6,23 +6,41 @@ import { SgpjImageEditor } from "../module/SgpjImageEditor";
 
 interface TextConfigs {
     center: Phaser.Types.GameObjects.Text.TextConfig;
+    left: Phaser.Types.GameObjects.Text.TextConfig;
+    up: Phaser.Types.GameObjects.Text.TextConfig;
+    right: Phaser.Types.GameObjects.Text.TextConfig;
+    down: Phaser.Types.GameObjects.Text.TextConfig;
 }
 
 // interface TextObjects {
 //     center?: Phaser.GameObjects.Text;
 // }
 
-// interface ImageObjects {
-//     bg?: Phaser.GameObjects.Image;
-//     title?: Phaser.GameObjects.Image;
-// }
+interface ContainerObjects {
+    left?: Phaser.GameObjects.Container;
+    up?: Phaser.GameObjects.Container;
+    right?: Phaser.GameObjects.Container;
+    down?: Phaser.GameObjects.Container;
+}
+
+interface ImageObjects {
+    logo?: Phaser.GameObjects.Image;
+}
+
+type themeGuideType = {
+    a: string;
+    b: string;
+    c: string;
+    d: string;
+}
 
 
 export default class LoadingScene extends Phaser.Scene {
     
     private textConfigs: TextConfigs | undefined;
     private bgGraphic: Phaser.GameObjects.Graphics | undefined;
-    // private images: ImageObjects;
+    private images: ImageObjects;
+    private containers: ContainerObjects;
     private bgVideoKey: string;
     
     
@@ -31,7 +49,8 @@ export default class LoadingScene extends Phaser.Scene {
         this.textConfigs = undefined;
         this.bgGraphic = undefined;
         // this.texts = {};
-        // this.images = {};
+        this.images = {};
+        this.containers = {};
         this.bgVideoKey = '';
     }
     
@@ -71,6 +90,62 @@ export default class LoadingScene extends Phaser.Scene {
                     wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
                 },
             },
+            left: {
+                x: 0,
+                y: 0,
+                text: undefined,
+                origin: {x: 0.5, y: 0.5},
+                style: {
+                    fontFamily: MyFonts.google.TrainOne,
+                    fontSize: 6 * window.devicePixelRatio + 'vmin',
+                    fontStyle: '400',
+                    color: 'white',
+                    align: 'center',
+                    wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
+                },
+            },
+            up: {
+                x: 0,
+                y: 0,
+                text: undefined,
+                origin: {x: 0.5, y: 0.5},
+                style: {
+                    fontFamily: MyFonts.google.TrainOne,
+                    fontSize: 6 * window.devicePixelRatio + 'vmin',
+                    fontStyle: '400',
+                    color: 'white',
+                    align: 'center',
+                    wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
+                },
+            },
+            right: {
+                x: 0,
+                y: 0,
+                text: undefined,
+                origin: {x: 0.5, y: 0.5},
+                style: {
+                    fontFamily: MyFonts.google.TrainOne,
+                    fontSize: 6 * window.devicePixelRatio + 'vmin',
+                    fontStyle: '400',
+                    color: 'white',
+                    align: 'center',
+                    wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
+                },
+            },
+            down: {
+                x: 0,
+                y: 0,
+                text: undefined,
+                origin: {x: 0.5, y: 0.5},
+                style: {
+                    fontFamily: MyFonts.google.TrainOne,
+                    fontSize: 6 * window.devicePixelRatio + 'vmin',
+                    fontStyle: '400',
+                    color: 'white',
+                    align: 'center',
+                    wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
+                },
+            },
         }
     }
     
@@ -80,33 +155,28 @@ export default class LoadingScene extends Phaser.Scene {
             return;
         }
         
-        
-
-        
-        // // 背景の配置
-        // this.images.bg = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'bg01');
-        // const ime = new SgpjImageEditor();
-        // this.images.bg.setScale(ime.imageCoverScaler(this.images.bg, this));
-        
         // 背景動画の配置と再生
         const bgVideo = this.add.video(this.sys.canvas.width / 2, this.sys.canvas.height / 2, this.bgVideoKey);
         const ime = new SgpjImageEditor();
         bgVideo.setScale(ime.imageCoverScaler(bgVideo, this));
         bgVideo.play(true);
         
-        
         // 背景用の黒の図形を配置
         this.bgGraphic = this.add.graphics();
         this.bgGraphic.fillStyle(0x000000, 0.5).fillRect(0, 0, this.sys.canvas.width, this.sys.canvas.height);
         this.bgGraphic.setAlpha(0);
         
-        
         this.time.delayedCall(300, () => {
             this.scene.launch('TitleScene');
         });
         
+        // フォント読み込み用のダミーテキスト
+        this.make.text(this.textConfigs.left).setText('DUMMY').setVisible(false);
         
-        
+        // ゲーム中の表示ロゴを配置
+        this.images.logo = this.add.image(this.sys.canvas.width / 8, this.sys.canvas.height / 8 * 7, 'title');
+        this.images.logo.setScale(0.1);
+        this.images.logo.setVisible(false);
         
         // ----------------- DEBUG ---------------------
         // this.time.delayedCall(100, () => {
@@ -121,14 +191,6 @@ export default class LoadingScene extends Phaser.Scene {
         //     });
         // });
         // ---------------------------------------------
-        
-        
-        // const num = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'num1');
-        // const baseSizeScale = ime.getScaleFactorFromVmin(30, num, this, true);
-        // num.setDisplaySize(num.displayWidth * baseSizeScale, num.displayHeight * baseSizeScale);
-        // const sf = 1.0;
-        // num.setScale(baseSizeScale * sf);
-        
         
     }
     
@@ -154,6 +216,145 @@ export default class LoadingScene extends Phaser.Scene {
             return;
         }
         this.bgGraphic.setAlpha(0);
+    }
+    
+    visibleLogoIcon() {
+        if (typeof this.images.logo === 'undefined') {
+            console.error('this.images.logo is undefined');
+            return;
+        }
+        this.images.logo.setVisible(true);
+        this.tweens.add({
+            targets: this.images.logo,
+            alpha: { from: 0.0, to: 1.0 },
+            x: { from: 0, to: this.sys.canvas.width / 8},
+            ease: Phaser.Math.Easing.Back.Out,
+            duration: 500,
+            yoyo: false
+        });
+    }
+    
+    hideLogoIcon() {
+        if (typeof this.images.logo === 'undefined') {
+            console.error('this.images.logo is undefined');
+            return;
+        }
+        this.images.logo.setVisible(false);
+    }
+    
+    visibleDirGuide(themeGuide: themeGuideType) {
+        if (typeof this.textConfigs === 'undefined') {
+            console.error('this.textConfigs is undefined');
+            return;
+        }
+        
+        type dirsType = 'left' | 'up' | 'right' | 'down';
+        const dirs: dirsType[]  = ['left', 'up', 'right', 'down'];
+        const dirSetting = {
+            left: {
+                rotate: -0.5,
+                textConfig: this.textConfigs.left,
+                themeGuide: themeGuide.a,
+                guidePosition: {
+                    x: 1.5,
+                    y: 0,
+                },
+                containerPosition: {
+                    x: this.sys.canvas.width / 8,
+                    y: this.sys.canvas.height / 2,
+                },
+            },
+            up: {
+                rotate: 0,
+                textConfig: this.textConfigs.up,
+                themeGuide: themeGuide.b,
+                guidePosition: {
+                    x: 0,
+                    y: 1,
+                },
+                containerPosition: {
+                    x: this.sys.canvas.width / 2,
+                    y: this.sys.canvas.height / 8,
+                },
+            },
+            right: {
+                rotate: 0.5,
+                textConfig: this.textConfigs.right,
+                themeGuide: themeGuide.d,
+                guidePosition: {
+                    x: -1.5,
+                    y: 0,
+                },
+                containerPosition: {
+                    x: this.sys.canvas.width / 8 * 7,
+                    y: this.sys.canvas.height / 2,
+                },
+            },
+            down: {
+                rotate: 1,
+                textConfig: this.textConfigs.down,
+                themeGuide: themeGuide.c,
+                guidePosition: {
+                    x: 0,
+                    y: -1,
+                },
+                containerPosition: {
+                    x: this.sys.canvas.width / 2,
+                    y: this.sys.canvas.height / 8 * 7,
+                },
+            }
+        }
+        
+        for (const dir of dirs) {
+            const arrow = this.add.graphics();
+            arrow.fillStyle(0xffffff, 1).fillTriangle(0, -25, -30, 25, 30, 25);
+            arrow.setRotation(Math.PI * dirSetting[dir].rotate);
+            arrow.setScale(0.5);
+            const guide = this.make.text(dirSetting[dir].textConfig).setText(dirSetting[dir].themeGuide);
+            arrow.setPosition(guide.width * dirSetting[dir].guidePosition.x, guide.height * dirSetting[dir].guidePosition.y);
+            
+            const container = this.add.container(0, 0);
+            container.add(guide);
+            container.add(arrow);
+            container.setPosition(dirSetting[dir].containerPosition.x, dirSetting[dir].containerPosition.y);
+            container.setAlpha(0.4);
+            container.setVisible(true);
+            this.containers[dir] = container;
+            
+            this.tweens.add({
+                targets: this.containers[dir],
+                alpha: { from: 0.0, to: 0.4 },
+                scale: { from: 0.0, to: 1.0 },
+                ease: Phaser.Math.Easing.Back.Out,
+                duration: 300,
+                yoyo: false,
+            });
+            
+            // // 定期的なアニメーション
+            // this.tweens.add({
+            //     targets: this.containers[dir],
+            //     scale: { from: 1.0, to: 1.2 },
+            //     ease: 'Sine.InOut',
+            //     duration: 100,
+            //     repeat: -1,
+            //     repeatDelay: 3000,
+            //     delay: 3000,
+            //     yoyo: true
+            // });
+        }
+        
+        
+    }
+    
+    hideDirGuide() {
+        this.containers.left?.setVisible(false);
+        this.containers.up?.setVisible(false);
+        this.containers.right?.setVisible(false);
+        this.containers.down?.setVisible(false);
+        this.containers.left = undefined;
+        this.containers.up = undefined;
+        this.containers.right = undefined;
+        this.containers.down = undefined;
     }
     
 }
