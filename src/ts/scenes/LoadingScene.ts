@@ -280,7 +280,7 @@ export default class LoadingScene extends Phaser.Scene {
             right: {
                 rotate: 0.5,
                 textConfig: this.textConfigs.right,
-                themeGuide: themeGuide.d,
+                themeGuide: themeGuide.c,
                 guidePosition: {
                     x: -1.5,
                     y: 0,
@@ -293,7 +293,7 @@ export default class LoadingScene extends Phaser.Scene {
             down: {
                 rotate: 1,
                 textConfig: this.textConfigs.down,
-                themeGuide: themeGuide.c,
+                themeGuide: themeGuide.d,
                 guidePosition: {
                     x: 0,
                     y: -1,
