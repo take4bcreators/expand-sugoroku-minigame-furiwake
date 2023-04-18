@@ -175,17 +175,18 @@ export default class DisplayThemeScene extends Phaser.Scene {
         const displayText = themeTitle;
         this.texts.title = this.make.text(this.textConfigs.title)
         .setText(displayText)
-        .setInteractive()
-        .on('pointerdown', (_pointer: Phaser.Input.Pointer) => {
-            this.scene.transition({
-                target: 'CountDownScene',
-                data: {
-                    gameThemeNo: this.gameThemeNo,
-                },
-                duration: 50,
-                onUpdate: (_progress: number) => {},
-            });
-        });
+        // .setInteractive()
+        // .on('pointerdown', (_pointer: Phaser.Input.Pointer) => {
+        //     this.scene.transition({
+        //         target: 'CountDownScene',
+        //         data: {
+        //             gameThemeNo: this.gameThemeNo,
+        //         },
+        //         duration: 50,
+        //         onUpdate: (_progress: number) => {},
+        //     });
+        // })
+        ;
         
         this.tweens.add({
             targets: this.texts.title,
@@ -196,10 +197,20 @@ export default class DisplayThemeScene extends Phaser.Scene {
             yoyo: false
         });
         
+        // クリックしたら次の画面へ遷移する
+        this.input.on('pointerdown', (_pointer: Phaser.Input.Pointer) => {
+            this.scene.transition({
+                target: 'CountDownScene',
+                data: {
+                    gameThemeNo: this.gameThemeNo,
+                },
+                duration: 50,
+                onUpdate: (_progress: number) => {},
+            });
+        });
         
         // 各方向のガイドを表示
         loadingScene.visibleDirGuide(themeGuide);
-        
     }
     
     
