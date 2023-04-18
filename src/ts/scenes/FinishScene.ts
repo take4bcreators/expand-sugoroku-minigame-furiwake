@@ -39,7 +39,7 @@ export default class FinishScene extends Phaser.Scene {
     
     
     preload(): void {
-        this.load.image('finish', './assets/images/text/finish.png');
+        // this.load.image('finish', './assets/images/text/finish.png');
         // this.textConfigs = {
         //     finish: {
         //         x: this.sys.canvas.width / 2,

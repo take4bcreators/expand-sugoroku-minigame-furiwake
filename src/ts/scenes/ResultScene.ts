@@ -51,7 +51,7 @@ export default class ResultScene extends Phaser.Scene {
     
     
     preload(): void {
-        this.load.image('result', './assets/images/text/result.png');
+        // this.load.image('result', './assets/images/text/result.png');
         
         this.textConfigs = {
             result: {

@@ -3,7 +3,7 @@ import { GameTheme } from '../interface/GameTheme'
 import { MyFonts } from '../interface/MyFonts';
 // import { SgpjImageEditor } from "../module/SgpjImageEditor";
 import LoadingScene from './LoadingScene';
-import WebFontLoader from 'phaser3-rex-plugins/plugins/webfontloader.js';   // WEBフォント使用のためのインポート
+// import WebFontLoader from 'phaser3-rex-plugins/plugins/webfontloader.js';   // WEBフォント使用のためのインポート
 
 
 interface TextConfigs {
@@ -39,7 +39,7 @@ export default class DisplayThemeScene extends Phaser.Scene {
     }
     
     preload(): void {
-        WebFontLoader.call(this.load, {google: {families: MyFonts.uselist.google}});
+        // WebFontLoader.call(this.load, {google: {families: MyFonts.uselist.google}});
         
         this.textConfigs = {
             title: {

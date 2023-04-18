@@ -57,22 +57,32 @@ export default class LoadingScene extends Phaser.Scene {
     
     preload(): void {
         // 背景の読み込み
-        this.load.image('bg01', './assets/images/bg/big-dot_bg_A_01.jpg');
+        // this.load.image('bg01', './assets/images/bg/big-dot_bg_A_01.jpg');
         
-        // カウントダウン用数字画像
-        this.load.image('num1', './assets/images/text/count1.png');
-        this.load.image('num2', './assets/images/text/count2.png');
-        this.load.image('num3', './assets/images/text/count3.png');
+        // 全てのファイルのロード処理が完了した時のイベント
+        this.load.on('complete', () => {
+            console.log('complete : call');
+        });
         
-        // タイトル画像
-        this.load.image('title', './assets/images/text/gametitle.png');
+        // Googleフォントの読み込み
+        WebFontLoader.call(this.load, {google: {families: MyFonts.uselist.google}});
         
         // 背景動画
         this.bgVideoKey = 'bg' + this.scene.key;
         this.load.video(this.bgVideoKey, './assets/videos/bgvideo01.mp4', 'loadeddata', false, true);
         
-        // Googleフォントの読み込み
-        WebFontLoader.call(this.load, {google: {families: MyFonts.uselist.google}});
+        // タイトル画像
+        this.load.image('title', './assets/images/text/gametitle.png');
+        
+        // 他のシーン用の画像読み込み
+        this.load.image('num1', './assets/images/text/count1.png');
+        this.load.image('num2', './assets/images/text/count2.png');
+        this.load.image('num3', './assets/images/text/count3.png');
+        this.load.image('go', './assets/images/text/go.png');
+        this.load.image('ok', './assets/images/text/ok.png');
+        this.load.image('ng', './assets/images/text/ng.png');
+        this.load.image('finish', './assets/images/text/finish.png');
+        this.load.image('result', './assets/images/text/result.png');
         
         // 文字スタイルの定義
         this.textConfigs = {
@@ -341,6 +351,22 @@ export default class LoadingScene extends Phaser.Scene {
             //     delay: 3000,
             //     yoyo: true
             // });
+            
+            
+            this.time.delayedCall(1000, () => {
+                guide.updateText();
+            });
+            this.time.delayedCall(2000, () => {
+                guide.updateText();
+            });
+            this.time.delayedCall(4000, () => {
+                guide.updateText();
+            });
+            this.time.delayedCall(8000, () => {
+                guide.updateText();
+            });
+            
+            
         }
         
         

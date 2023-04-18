@@ -98,9 +98,9 @@ export default class GamingScene extends Phaser.Scene {
     }
     
     preload(): void {
-        this.load.image('go', './assets/images/text/go.png');
-        this.load.image('ok', './assets/images/text/ok.png');
-        this.load.image('ng', './assets/images/text/ng.png');
+        // this.load.image('go', './assets/images/text/go.png');
+        // this.load.image('ok', './assets/images/text/ok.png');
+        // this.load.image('ng', './assets/images/text/ng.png');
         
         this.textConfigs = {
             center: {
