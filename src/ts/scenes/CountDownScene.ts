@@ -54,10 +54,10 @@ export default class CountDownScene extends Phaser.Scene {
                 text: 'Loading...',
                 origin: {x: 0.5, y: 0.5},
                 style: {
-                    fontFamily: MyFonts.google.MPLUS1p,
+                    fontFamily: MyFonts.google.Exo2,
                     fontSize: 4 * window.devicePixelRatio + 'vmin',
                     fontStyle: '700',
-                    color: '#79B0D2',
+                    color: 'white',
                 },
             },
         }

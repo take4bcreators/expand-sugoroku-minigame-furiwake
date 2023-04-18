@@ -6,6 +6,7 @@ import { SgpjAnimAssist } from "../module/SgpjAnimAssist";
 import SgpjNumberGenerator from '../module/SgpjNumberGenerator';
 // スワイプ用プラグイン（要：yarn add phaser3-rex-plugins）https://rexrainbow.github.io/phaser3-rex-notes/docs/site/gesture-swipe/
 import { Swipe } from 'phaser3-rex-plugins/plugins/gestures.js';
+import { SgpjImageEditor } from "../module/SgpjImageEditor";
 
 
 type GameState = 'GameStart' | 'Last3Count' | 'Finish' | undefined;
@@ -24,10 +25,10 @@ interface TextConfigs {
     correct: Phaser.Types.GameObjects.Text.TextConfig;
     incorrect: Phaser.Types.GameObjects.Text.TextConfig;
     userPoint: Phaser.Types.GameObjects.Text.TextConfig;
-    guideA: Phaser.Types.GameObjects.Text.TextConfig;
-    guideB: Phaser.Types.GameObjects.Text.TextConfig;
-    guideC: Phaser.Types.GameObjects.Text.TextConfig;
-    guideD: Phaser.Types.GameObjects.Text.TextConfig;
+    // guideA: Phaser.Types.GameObjects.Text.TextConfig;
+    // guideB: Phaser.Types.GameObjects.Text.TextConfig;
+    // guideC: Phaser.Types.GameObjects.Text.TextConfig;
+    // guideD: Phaser.Types.GameObjects.Text.TextConfig;
 }
 
 interface TextObjects {
@@ -37,17 +38,22 @@ interface TextObjects {
     correct?: Phaser.GameObjects.Text;
     incorrect?: Phaser.GameObjects.Text;
     userPoint?: Phaser.GameObjects.Text;
-    guideA?: Phaser.GameObjects.Text;
-    guideB?: Phaser.GameObjects.Text;
-    guideC?: Phaser.GameObjects.Text;
-    guideD?: Phaser.GameObjects.Text;
+    // guideA?: Phaser.GameObjects.Text;
+    // guideB?: Phaser.GameObjects.Text;
+    // guideC?: Phaser.GameObjects.Text;
+    // guideD?: Phaser.GameObjects.Text;
 }
+
+interface ImageObjects {
+    go?: Phaser.GameObjects.Image;
+}
+
 
 
 export default class GamingScene extends Phaser.Scene {
     
     private readonly COUNT_START_TIME: number = 15;
-    private readonly START_TEXT: string = 'START!!';
+    private readonly START_TEXT: string = '';
     private readonly CORRECT_TEXT: string = '正解';
     private readonly INCORRECT_TEXT: string = '不正解';
     private readonly NEXT_SHOW_INTERVAL_MSEC: number = 500;
@@ -65,6 +71,7 @@ export default class GamingScene extends Phaser.Scene {
     private nowContentIndex: number;
     private nowUserPoint: number;
     private numgen: SgpjNumberGenerator;
+    private images: ImageObjects;
     
     
     constructor() {
@@ -81,6 +88,7 @@ export default class GamingScene extends Phaser.Scene {
         this.nowUserPoint = 0;
         this.anim = new SgpjAnimAssist();
         this.numgen = new SgpjNumberGenerator();
+        this.images = {};
     }
     
     init(data: any) {
@@ -88,6 +96,8 @@ export default class GamingScene extends Phaser.Scene {
     }
     
     preload(): void {
+        this.load.image('go', './assets/images/text/go.png');
+        
         this.textConfigs = {
             center: {
                 x: this.sys.canvas.width / 2,
@@ -110,7 +120,7 @@ export default class GamingScene extends Phaser.Scene {
                     fontFamily: MyFonts.google.MPLUS1p,
                     fontSize: undefined,
                     fontStyle: '700',
-                    color: '#79B0D2',
+                    color: '#ffffff',
                     align: 'center',
                     wordWrap: { width: this.sys.canvas.width * 0.7, useAdvancedWrap: true },
                 },
@@ -163,54 +173,54 @@ export default class GamingScene extends Phaser.Scene {
                     color: 'gray',
                 },
             },
-            guideA: {
-                x: this.sys.canvas.width / 10,
-                y: this.sys.canvas.height / 2,
-                text: undefined,
-                origin: {x: 0.5, y: 0.5},
-                style: {
-                    fontFamily: MyFonts.google.MPLUS1p,
-                    fontSize: 4 * window.devicePixelRatio + 'vmin',
-                    fontStyle: '700',
-                    color: 'gray',
-                },
-            },
-            guideB: {
-                x: this.sys.canvas.width / 2,
-                y: this.sys.canvas.height / 10,
-                text: undefined,
-                origin: {x: 0.5, y: 0.5},
-                style: {
-                    fontFamily: MyFonts.google.MPLUS1p,
-                    fontSize: 4 * window.devicePixelRatio + 'vmin',
-                    fontStyle: '700',
-                    color: 'gray',
-                },
-            },
-            guideC: {
-                x: this.sys.canvas.width / 10 * 9,
-                y: this.sys.canvas.height / 2,
-                text: undefined,
-                origin: {x: 0.5, y: 0.5},
-                style: {
-                    fontFamily: MyFonts.google.MPLUS1p,
-                    fontSize: 4 * window.devicePixelRatio + 'vmin',
-                    fontStyle: '700',
-                    color: 'gray',
-                },
-            },
-            guideD: {
-                x: this.sys.canvas.width / 2,
-                y: this.sys.canvas.height / 10 * 9,
-                text: undefined,
-                origin: {x: 0.5, y: 0.5},
-                style: {
-                    fontFamily: MyFonts.google.MPLUS1p,
-                    fontSize: 4 * window.devicePixelRatio + 'vmin',
-                    fontStyle: '700',
-                    color: 'gray',
-                },
-            },
+            // guideA: {
+            //     x: this.sys.canvas.width / 10,
+            //     y: this.sys.canvas.height / 2,
+            //     text: undefined,
+            //     origin: {x: 0.5, y: 0.5},
+            //     style: {
+            //         fontFamily: MyFonts.google.MPLUS1p,
+            //         fontSize: 4 * window.devicePixelRatio + 'vmin',
+            //         fontStyle: '700',
+            //         color: 'gray',
+            //     },
+            // },
+            // guideB: {
+            //     x: this.sys.canvas.width / 2,
+            //     y: this.sys.canvas.height / 10,
+            //     text: undefined,
+            //     origin: {x: 0.5, y: 0.5},
+            //     style: {
+            //         fontFamily: MyFonts.google.MPLUS1p,
+            //         fontSize: 4 * window.devicePixelRatio + 'vmin',
+            //         fontStyle: '700',
+            //         color: 'gray',
+            //     },
+            // },
+            // guideC: {
+            //     x: this.sys.canvas.width / 10 * 9,
+            //     y: this.sys.canvas.height / 2,
+            //     text: undefined,
+            //     origin: {x: 0.5, y: 0.5},
+            //     style: {
+            //         fontFamily: MyFonts.google.MPLUS1p,
+            //         fontSize: 4 * window.devicePixelRatio + 'vmin',
+            //         fontStyle: '700',
+            //         color: 'gray',
+            //     },
+            // },
+            // guideD: {
+            //     x: this.sys.canvas.width / 2,
+            //     y: this.sys.canvas.height / 10 * 9,
+            //     text: undefined,
+            //     origin: {x: 0.5, y: 0.5},
+            //     style: {
+            //         fontFamily: MyFonts.google.MPLUS1p,
+            //         fontSize: 4 * window.devicePixelRatio + 'vmin',
+            //         fontStyle: '700',
+            //         color: 'gray',
+            //     },
+            // },
         }
     }
     
@@ -272,19 +282,58 @@ export default class GamingScene extends Phaser.Scene {
         .setText(this.nowUserPoint.toString())
         ;
         
-        // 上下左右のガイドテキストの生成
-        this.texts.guideA = this.make.text(this.textConfigs.guideA)
-        .setText(this.gameThemes[this.gameThemeNo].guide.a)
+        // // 上下左右のガイドテキストの生成
+        // this.texts.guideA = this.make.text(this.textConfigs.guideA)
+        // .setText(this.gameThemes[this.gameThemeNo].guide.a)
+        // ;
+        // this.texts.guideB = this.make.text(this.textConfigs.guideB)
+        // .setText(this.gameThemes[this.gameThemeNo].guide.b)
+        // ;
+        // this.texts.guideC = this.make.text(this.textConfigs.guideC)
+        // .setText(this.gameThemes[this.gameThemeNo].guide.c)
+        // ;
+        // this.texts.guideD = this.make.text(this.textConfigs.guideD)
+        // .setText(this.gameThemes[this.gameThemeNo].guide.d)
+        // ;
+        
+        
+        // スタート時のテキストを配置
+        this.images.go = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'go');
+        const ime = new SgpjImageEditor();
+        const scaleFactor = ime.getScaleFactorFromVmin(30, this.images.go, this);
+        this.images.go.setDisplaySize(this.images.go.width * scaleFactor, this.images.go.height * scaleFactor)
         ;
-        this.texts.guideB = this.make.text(this.textConfigs.guideB)
-        .setText(this.gameThemes[this.gameThemeNo].guide.b)
-        ;
-        this.texts.guideC = this.make.text(this.textConfigs.guideC)
-        .setText(this.gameThemes[this.gameThemeNo].guide.c)
-        ;
-        this.texts.guideD = this.make.text(this.textConfigs.guideD)
-        .setText(this.gameThemes[this.gameThemeNo].guide.d)
-        ;
+        
+        // スタート時のテキストの登場アニメーション
+        // this.tweens.add({
+        //     targets: this.images.go,
+        //     alpha: { from: 1.0, to: 0.0 },
+        //     scale: { from: scaleFactor, to: 0.0 },
+        //     // ease: Phaser.Math.Easing.Back.Out,
+        //     ease: Phaser.Math.Easing.Back.In,
+        //     duration: 300,
+        //     delay: 300,
+        //     yoyo: false
+        // });
+        
+        this.tweens.add({
+            targets: this.images.go,
+            x: { from: this.sys.canvas.width * 0.3, to: this.sys.canvas.width * 0.5},
+            ease: Phaser.Math.Easing.Back.Out,
+            duration: 300,
+            yoyo: false
+        });
+        this.tweens.add({
+            targets: this.images.go,
+            x: { from: this.sys.canvas.width * 0.5, to: this.sys.canvas.width * 1.0},
+            alpha: { from: 1.0, to: 0.0 },
+            ease: Phaser.Math.Easing.Back.Out,
+            duration: 300,
+            delay: 500,
+            yoyo: false
+        });
+        
+        
         
         // スワイプを判定
         // 参照：https://rexrainbow.github.io/phaser3-rex-notes/docs/site/gesture-swipe/
@@ -450,8 +499,8 @@ export default class GamingScene extends Phaser.Scene {
         if (this.texts.center !== undefined) {
             switch (this.gameState) {
                 case 'GameStart':
-                    this.anim.simpleScale(this.texts.center, 'up', [0.5, 0.2], [1.0, 0.01]);
-                    this.anim.simpleFade(this.texts.center, 'out', [0.5, 0.02], [0.0, 0.1]);
+                    // this.anim.simpleScale(this.texts.center, 'up', [0.5, 0.2], [1.0, 0.01]);
+                    // this.anim.simpleFade(this.texts.center, 'out', [0.5, 0.02], [0.0, 0.1]);
                     break;
                 case 'Last3Count':
                     this.anim.simpleScale(this.texts.center, 'up', [0.8, 0.2], [1.0, 0.01]);

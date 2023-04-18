@@ -104,6 +104,7 @@ export default class TitleScene extends Phaser.Scene {
         // 背景用の黒の図形を削除
         const loadingScene = this.scene.get('LoadingScene') as LoadingScene;
         loadingScene.hideBgGraphic();
+        loadingScene.hideLogoIcon();
         
         // タイトルの配置
         this.images.title = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'title');
@@ -194,7 +195,7 @@ export default class TitleScene extends Phaser.Scene {
         //     this.scene.transition({
         //         target: 'ResultScene',
         //         data: {
-        //             userPoint: 5,
+        //             userPoint: 12,
         //         },
         //         duration: 10,
         //         onUpdate: (_progress: number) => {

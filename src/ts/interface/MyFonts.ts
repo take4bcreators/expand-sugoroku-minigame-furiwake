@@ -9,15 +9,21 @@ export const MyFonts = {
             'Kaisei Opti:400',
             'Hind:300,400,500,600',     // 数字用フォント
             'RocknRoll One:400',
+            'Share Tech Mono:400',          // 結果画面 用
         ],
     },
     google: {
+        /** PRESS START 用 */
         Exo2: '"Exo 2"',
+        /** 方向ガイド用 */
         TrainOne: '"Train One"',
         MPLUS1p: '"M PLUS 1p"',
         NotoSansJP: '"Noto Sans JP"',
         KaiseiOpti: '"Kaisei Opti"',
+        /** 数字用フォント */
         Hind: '"Hind"',
         RocknRollOne: '"RocknRoll One"',
+        /** 結果画面用 */
+        ShareTechMono: '"Share Tech Mono"',
     },
 }
