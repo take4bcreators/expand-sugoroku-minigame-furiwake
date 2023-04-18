@@ -46,6 +46,8 @@ interface TextObjects {
 
 interface ImageObjects {
     go?: Phaser.GameObjects.Image;
+    ok?: Phaser.GameObjects.Image;
+    ng?: Phaser.GameObjects.Image;
 }
 
 
@@ -97,6 +99,8 @@ export default class GamingScene extends Phaser.Scene {
     
     preload(): void {
         this.load.image('go', './assets/images/text/go.png');
+        this.load.image('ok', './assets/images/text/ok.png');
+        this.load.image('ng', './assets/images/text/ng.png');
         
         this.textConfigs = {
             center: {
@@ -105,7 +109,7 @@ export default class GamingScene extends Phaser.Scene {
                 text: this.START_TEXT,
                 origin: {x: 0.5, y: 0.5},
                 style: {
-                    fontFamily: MyFonts.google.MPLUS1p,
+                    fontFamily: MyFonts.google.ShareTechMono,
                     fontSize: 20 * window.devicePixelRatio + 'vmin',
                     fontStyle: '700',
                     color: '#92E4A7',
@@ -126,15 +130,16 @@ export default class GamingScene extends Phaser.Scene {
                 },
             },
             timer: {
-                x: this.sys.canvas.width / 8,
+                x: this.sys.canvas.width / 8 * 7,
                 y: this.sys.canvas.height / 8 * 7,
                 text: this.COUNT_START_TIME.toString(),
                 origin: {x: 0.5, y: 0.5},
                 style: {
-                    fontFamily: MyFonts.google.Hind,
+                    // fontFamily: MyFonts.google.Hind,
+                    fontFamily: MyFonts.google.ShareTechMono,
                     fontSize: 22 * window.devicePixelRatio + 'vmin',
                     fontStyle: '700',
-                    color: '#79B0D2',
+                    color: '#ffffff',
                 },
             },
             correct: {
@@ -162,15 +167,15 @@ export default class GamingScene extends Phaser.Scene {
                 },
             },
             userPoint: {
-                x: 100,
-                y: 100,
+                x: this.sys.canvas.width / 8,
+                y: this.sys.canvas.height / 8,
                 text: undefined,
                 origin: {x: 0.5, y: 0.5},
                 style: {
-                    fontFamily: MyFonts.google.MPLUS1p,
+                    fontFamily: MyFonts.google.ShareTechMono,
                     fontSize: 7 * window.devicePixelRatio + 'vmin',
                     fontStyle: '700',
-                    color: 'gray',
+                    color: '#ffffff',
                 },
             },
             // guideA: {
@@ -297,7 +302,7 @@ export default class GamingScene extends Phaser.Scene {
         // ;
         
         
-        // スタート時のテキストを配置
+        // スタート時のテキスト画像を配置
         this.images.go = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'go');
         const ime = new SgpjImageEditor();
         const scaleFactor = ime.getScaleFactorFromVmin(30, this.images.go, this);
@@ -334,6 +339,23 @@ export default class GamingScene extends Phaser.Scene {
         });
         
         
+        // OK用の画像
+        // this.images.ok = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 4 * 3, 'ok');
+        this.images.ok = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'ok');
+        const scaleFactorOK = ime.getScaleFactorFromVmin(10, this.images.ok, this);
+        this.images.ok.setDisplaySize(this.images.ok.width * scaleFactorOK, this.images.ok.height * scaleFactorOK)
+        .setAlpha(0)
+        ;
+        
+        // NG用の画像
+        // this.images.ng = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 4 * 3, 'ng');
+        this.images.ng = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'ng');
+        const scaleFactorNG = ime.getScaleFactorFromVmin(10, this.images.ng, this);
+        this.images.ng.setDisplaySize(this.images.ng.width * scaleFactorNG, this.images.ng.height * scaleFactorNG)
+        .setAlpha(0)
+        ;
+        
+        
         
         // スワイプを判定
         // 参照：https://rexrainbow.github.io/phaser3-rex-notes/docs/site/gesture-swipe/
@@ -365,19 +387,39 @@ export default class GamingScene extends Phaser.Scene {
             }
             if (isCorrect) {
                 this.nowUserPoint++;
-                if (this.texts.correct !== undefined) {
-                    this.texts.correct
-                    .setVisible(true)
-                    .setScale(0.1)
-                    ;
-                }
+                // if (this.texts.correct !== undefined) {
+                //     this.texts.correct
+                //     .setVisible(true)
+                //     .setScale(0.1)
+                //     ;
+                // }
+                this.tweens.add({
+                    targets: this.images.ok,
+                    alpha: { from: 0.0, to: 1.0 },
+                    scale: { from: 0.0, to: scaleFactorOK },
+                    ease: Phaser.Math.Easing.Back.Out,
+                    // duration: 300,
+                    // yoyo: false
+                    duration: 300,
+                    yoyo: true
+                });
             } else {
-                if (this.texts.incorrect !== undefined) {
-                    this.texts.incorrect
-                    .setVisible(true)
-                    .setScale(0.1)
-                    ;
-                }
+                // if (this.texts.incorrect !== undefined) {
+                //     this.texts.incorrect
+                //     .setVisible(true)
+                //     .setScale(0.1)
+                //     ;
+                // }
+                this.tweens.add({
+                    targets: this.images.ng,
+                    alpha: { from: 0.0, to: 1.0 },
+                    scale: { from: 0.0, to: scaleFactorNG },
+                    ease: Phaser.Math.Easing.Back.Out,
+                    // duration: 300,
+                    // yoyo: false
+                    duration: 300,
+                    yoyo: true
+                });
             }
             if (this.texts.userPoint !== undefined) {
                 this.texts.userPoint.setText(this.nowUserPoint.toString());

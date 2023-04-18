@@ -155,9 +155,16 @@ export default class ResultScene extends Phaser.Scene {
         
         this.images.result = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 8, 'result');
         const ime = new SgpjImageEditor();
-        const scaleFactor = ime.getScaleFactorFromVmin(10, this.images.result, this);
+        
+        let scaleFactor = ime.getScaleFactorFromVmin(10, this.images.result, this);
+        if (window.innerWidth <= 767) {
+            scaleFactor = ime.getScaleFactorFromVmin(50, this.images.result, this);
+        } else if (window.innerWidth <= 1280) {
+            scaleFactor = ime.getScaleFactorFromVmin(30, this.images.result, this);
+        }
         this.images.result
         .setDisplaySize(this.images.result.width * scaleFactor, this.images.result.height * scaleFactor)
+        ;
         
         
         // 各方向のガイドを非表示にする
