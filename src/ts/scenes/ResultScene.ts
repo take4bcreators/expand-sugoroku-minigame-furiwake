@@ -51,8 +51,6 @@ export default class ResultScene extends Phaser.Scene {
     
     
     preload(): void {
-        // this.load.image('result', './assets/images/text/result.png');
-        
         this.textConfigs = {
             result: {
                 x: this.sys.canvas.width / 2,
@@ -68,8 +66,6 @@ export default class ResultScene extends Phaser.Scene {
                 },
             },
             pointText1: {
-                // x: this.sys.canvas.width / 2,
-                // y: (this.sys.canvas.height / 2) - (this.sys.canvas.height / 5),
                 x: (this.sys.canvas.width / 2) + (this.sys.canvas.width / 18),
                 y: (this.sys.canvas.height / 2) - (this.sys.canvas.height / 10),
                 text: undefined,
@@ -77,14 +73,12 @@ export default class ResultScene extends Phaser.Scene {
                 style: {
                     fontFamily: MyFonts.google.ShareTechMono,
                     fontSize: 20 * window.devicePixelRatio + 'vmin',
-                    fontStyle: '700',
+                    fontStyle: '400',
                     color: '#ffffff',
                     align: 'center',
                 },
             },
             pointText2: {
-                // x: this.sys.canvas.width / 2,
-                // y: (this.sys.canvas.height / 2) - (this.sys.canvas.height / 20),
                 x: (this.sys.canvas.width / 2) - (this.sys.canvas.width / 12),
                 y: (this.sys.canvas.height / 2) - (this.sys.canvas.height / 10),
                 text: 'Score',
@@ -98,8 +92,6 @@ export default class ResultScene extends Phaser.Scene {
                 },
             },
             rankText1: {
-                // x: this.sys.canvas.width / 2,
-                // y: (this.sys.canvas.height / 2) + (this.sys.canvas.height / 40 * 9),
                 x: (this.sys.canvas.width / 2) + (this.sys.canvas.width / 18),
                 y: (this.sys.canvas.height / 2) + (this.sys.canvas.height / 10),
                 text: undefined,
@@ -107,14 +99,12 @@ export default class ResultScene extends Phaser.Scene {
                 style: {
                     fontFamily: MyFonts.google.ShareTechMono,
                     fontSize: 15 * window.devicePixelRatio + 'vmin',
-                    fontStyle: '700',
+                    fontStyle: '400',
                     color: '#ffffff',
                     align: 'center',
                 },
             },
             rankText2: {
-                // x: this.sys.canvas.width / 2,
-                // y: (this.sys.canvas.height / 2) + (this.sys.canvas.height / 10),
                 x: (this.sys.canvas.width / 2) - (this.sys.canvas.width / 12),
                 y: (this.sys.canvas.height / 2) + (this.sys.canvas.height / 10),
                 text: 'Rank',
@@ -153,22 +143,21 @@ export default class ResultScene extends Phaser.Scene {
             return;
         }
         
+        // 画像を配置する
         this.images.result = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 8, 'result');
         const ime = new SgpjImageEditor();
-        
-        let scaleFactor = ime.getScaleFactorFromVmin(10, this.images.result, this);
+        let sf = ime.getScaleFactorFromVmin(10, this.images.result, this);
         if (window.innerWidth <= 767) {
-            scaleFactor = ime.getScaleFactorFromVmin(50, this.images.result, this);
+            sf = ime.getScaleFactorFromVmin(50, this.images.result, this);
         } else if (window.innerWidth <= 1280) {
-            scaleFactor = ime.getScaleFactorFromVmin(30, this.images.result, this);
+            sf = ime.getScaleFactorFromVmin(30, this.images.result, this);
         }
-        this.images.result
-        .setDisplaySize(this.images.result.width * scaleFactor, this.images.result.height * scaleFactor)
-        ;
+        this.images.result.setDisplaySize(this.images.result.width * sf, this.images.result.height * sf);
         
+        // 背面画像操作・すごろくモード判定のためにローディングシーンを取得する
+        const loadingScene = this.scene.get('LoadingScene') as LoadingScene;
         
         // 各方向のガイドを非表示にする
-        const loadingScene = this.scene.get('LoadingScene') as LoadingScene;
         loadingScene.hideDirGuide();
         
         // ランクを判定する
@@ -186,12 +175,22 @@ export default class ResultScene extends Phaser.Scene {
         // テキストを配置する
         this.texts.pointText1 = this.make.text(this.textConfigs.pointText1).setText(this.userPoint.toString());
         this.texts.pointText2 = this.make.text(this.textConfigs.pointText2);
-        // this.texts.result = this.make.text(this.textConfigs.result);
         this.texts.rankText1 = this.make.text(this.textConfigs.rankText1).setText(this.userRank);
         this.texts.rankText2 = this.make.text(this.textConfigs.rankText2);
-        this.texts.button1 = this.make.text(this.textConfigs.button1)
-        .setInteractive()
-        .on('pointerdown', (_pointer: Phaser.Input.Pointer) => {
+        this.texts.button1 = this.make.text(this.textConfigs.button1);
+        
+        // すごろくモードの場合はランクを格納してボタンの文字列を変化させる
+        if (loadingScene.sgcon.isSugorokuMode) {
+            loadingScene.sgcon.setRankValue(this.userRank);
+            this.texts.button1.setText('タップですごろくに戻る');
+        }
+        
+        // ボタンクリック時はすごろくモードであるかに応じて挙動を変化
+        this.texts.button1.setInteractive().on('pointerdown', (_pointer: Phaser.Input.Pointer) => {
+            if (loadingScene.sgcon.isSugorokuMode) {
+                loadingScene.sgcon.returnToSugoroku();
+                return;
+            }
             this.scene.transition({
                 target: 'TitleScene',
                 data: {},
@@ -200,39 +199,31 @@ export default class ResultScene extends Phaser.Scene {
             });
         });
         
+        // 登場時のアニメーションを設定
+        const startAnimeTargets = [this.texts.pointText1, this.texts.rankText1];
+        for (const startAnimeTarget of startAnimeTargets) {
+            this.tweens.add({
+                targets: startAnimeTarget,
+                alpha: { from: 0.0, to: 1.0 },
+                scale: { from: 0.0, to: 1.0 },
+                ease: Phaser.Math.Easing.Back.Out,
+                duration: 300,
+                yoyo: false
+            });
+        }
         
-        this.tweens.add({
-            targets: this.texts.pointText1,
-            alpha: { from: 0.0, to: 1.0 },
-            scale: { from: 0.0, to: 1.0 },
-            ease: Phaser.Math.Easing.Back.Out,
-            duration: 300,
-            yoyo: false
-        });
-        this.tweens.add({
-            targets: this.texts.rankText1,
-            alpha: { from: 0.0, to: 1.0 },
-            scale: { from: 0.0, to: 1.0 },
-            ease: Phaser.Math.Easing.Back.Out,
-            duration: 300,
-            yoyo: false
-        });
-        
-        
-        
-        // タイトルの定期的なアニメーション
-        this.tweens.add({
-            targets: this.texts.button1,
-            scale: { from: 1.0, to: 1.1 },
-            ease: 'Sine.InOut',
-            duration: 100,
-            repeat: -1,
-            repeatDelay: 3000,
-            delay: 3000,
-            yoyo: true
-        });
-        
-        
+        // 定期的なアニメーションを設定
+        const loopAnimeTargets = [this.texts.button1];
+        for (const loopAnimeTarget of loopAnimeTargets) {
+            this.tweens.add({
+                targets: loopAnimeTarget,
+                alpha: { from: 0.0, to: 1.0 },
+                scale: { from: 0.0, to: 1.0 },
+                ease: Phaser.Math.Easing.Back.Out,
+                duration: 300,
+                yoyo: false
+            });
+        }
     }
     
     

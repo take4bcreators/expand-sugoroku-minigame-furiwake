@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import WebFontLoader from 'phaser3-rex-plugins/plugins/webfontloader.js';   // WEBフォント使用のためのインポート
 import { MyFonts } from '../interface/MyFonts'; 
 import { SgpjImageEditor } from "../module/SgpjImageEditor";
-
+import { SugorokuConnection } from '../module/SugorokuConnection';
 
 interface TextConfigs {
     center: Phaser.Types.GameObjects.Text.TextConfig;
@@ -36,45 +36,35 @@ type themeGuideType = {
 
 
 export default class LoadingScene extends Phaser.Scene {
-    
     private textConfigs: TextConfigs | undefined;
     private bgGraphic: Phaser.GameObjects.Graphics | undefined;
     private images: ImageObjects;
     private containers: ContainerObjects;
     private bgVideoKey: string;
+    sgcon: SugorokuConnection;
     
     
     constructor() {
         super({ key: 'LoadingScene', active: true });
         this.textConfigs = undefined;
         this.bgGraphic = undefined;
-        // this.texts = {};
         this.images = {};
         this.containers = {};
         this.bgVideoKey = '';
+        this.sgcon = new SugorokuConnection();
     }
     
     
     preload(): void {
-        // 背景の読み込み
-        // this.load.image('bg01', './assets/images/bg/big-dot_bg_A_01.jpg');
-        
-        // 全てのファイルのロード処理が完了した時のイベント
-        this.load.on('complete', () => {
-            console.log('complete : call');
-        });
-        
-        // Googleフォントの読み込み
+        // Googleフォントを読み込む
         WebFontLoader.call(this.load, {google: {families: MyFonts.uselist.google}});
         
-        // 背景動画
+        // 背景動画を読み込む
         this.bgVideoKey = 'bg' + this.scene.key;
         this.load.video(this.bgVideoKey, './assets/videos/bgvideo01.mp4', 'loadeddata', false, true);
         
-        // タイトル画像
+        // 画像を読み込む（他のシーンの画像もここで一括で読み込む）
         this.load.image('title', './assets/images/text/gametitle.png');
-        
-        // 他のシーン用の画像読み込み
         this.load.image('num1', './assets/images/text/count1.png');
         this.load.image('num2', './assets/images/text/count2.png');
         this.load.image('num3', './assets/images/text/count3.png');
@@ -84,7 +74,7 @@ export default class LoadingScene extends Phaser.Scene {
         this.load.image('finish', './assets/images/text/finish.png');
         this.load.image('result', './assets/images/text/result.png');
         
-        // 文字スタイルの定義
+        // 文字スタイルを定義する
         this.textConfigs = {
             center: {
                 x: this.sys.canvas.width / 2,
@@ -157,7 +147,11 @@ export default class LoadingScene extends Phaser.Scene {
                 },
             },
         }
+        
+        // すごろくモードであるかを判定する
+        this.sgcon.checkSugorokuMode();
     }
+    
     
     create(): void {
         if (this.textConfigs === undefined) {
@@ -165,28 +159,26 @@ export default class LoadingScene extends Phaser.Scene {
             return;
         }
         
-        // 背景動画の配置と再生
+        // 背景動画の配置と再生をする
         const bgVideo = this.add.video(this.sys.canvas.width / 2, this.sys.canvas.height / 2, this.bgVideoKey);
         const ime = new SgpjImageEditor();
         bgVideo.setScale(ime.imageCoverScaler(bgVideo, this));
         bgVideo.play(true);
         
-        // 背景用の黒の図形を配置
+        // 背景用の黒の図形を配置する（特定のシーン移動時に表示する）
         this.bgGraphic = this.add.graphics();
         this.bgGraphic.fillStyle(0x000000, 0.5).fillRect(0, 0, this.sys.canvas.width, this.sys.canvas.height);
         this.bgGraphic.setAlpha(0);
         
-        this.time.delayedCall(300, () => {
-            this.scene.launch('TitleScene');
-        });
-        
-        // フォント読み込み用のダミーテキスト
-        this.make.text(this.textConfigs.left).setText('DUMMY').setVisible(false);
-        
-        // ゲーム中の表示ロゴを配置
+        // ゲーム中の表示ロゴを配置する（特定のシーン移動時に表示する）
         this.images.logo = this.add.image(this.sys.canvas.width / 8, this.sys.canvas.height / 8 * 7, 'title');
         this.images.logo.setScale(0.1);
         this.images.logo.setVisible(false);
+        
+        // タイトルシーンに移動する
+        this.time.delayedCall(300, () => {
+            this.scene.launch('TitleScene');
+        });
         
         // ----------------- DEBUG ---------------------
         // this.time.delayedCall(100, () => {
@@ -201,17 +193,14 @@ export default class LoadingScene extends Phaser.Scene {
         //     });
         // });
         // ---------------------------------------------
-        
     }
     
     
     update(_time: number, _delta: number): void {
     }
     
+    /** 背景用の黒の図形を表示する */
     visibleBgGraphic() {
-        // 背景用の黒の図形を配置
-        // this.bgGraphic = this.add.graphics();
-        // this.bgGraphic.fillStyle(0x000000, 0.5).fillRect(0, 0, this.sys.canvas.width, this.sys.canvas.height);
         if (typeof this.bgGraphic === 'undefined') {
             console.error('this.bgGraphic is undefined');
             return;
@@ -219,8 +208,8 @@ export default class LoadingScene extends Phaser.Scene {
         this.bgGraphic.setAlpha(1);
     }
     
+    /** 背景用の黒の図形を非表示にする */
     hideBgGraphic() {
-        // 背景用の黒の図形を配置
         if (typeof this.bgGraphic === 'undefined') {
             console.error('this.bgGraphic is undefined');
             return;
@@ -228,6 +217,7 @@ export default class LoadingScene extends Phaser.Scene {
         this.bgGraphic.setAlpha(0);
     }
     
+    /** ロゴアイコンを表示する */
     visibleLogoIcon() {
         if (typeof this.images.logo === 'undefined') {
             console.error('this.images.logo is undefined');
@@ -244,6 +234,7 @@ export default class LoadingScene extends Phaser.Scene {
         });
     }
     
+    /** ロゴアイコンを非表示にする */
     hideLogoIcon() {
         if (typeof this.images.logo === 'undefined') {
             console.error('this.images.logo is undefined');
@@ -252,12 +243,12 @@ export default class LoadingScene extends Phaser.Scene {
         this.images.logo.setVisible(false);
     }
     
+    /** 各方向のガイドを表示する */
     visibleDirGuide(themeGuide: themeGuideType) {
         if (typeof this.textConfigs === 'undefined') {
             console.error('this.textConfigs is undefined');
             return;
         }
-        
         type dirsType = 'left' | 'up' | 'right' | 'down';
         const dirs: dirsType[]  = ['left', 'up', 'right', 'down'];
         const dirSetting = {
@@ -265,53 +256,29 @@ export default class LoadingScene extends Phaser.Scene {
                 rotate: -0.5,
                 textConfig: this.textConfigs.left,
                 themeGuide: themeGuide.a,
-                guidePosition: {
-                    x: 1.5,
-                    y: 0,
-                },
-                containerPosition: {
-                    x: this.sys.canvas.width / 8,
-                    y: this.sys.canvas.height / 2,
-                },
+                guidePosition: {x: 1.5, y: 0},
+                containerPosition: {x: this.sys.canvas.width / 8, y: this.sys.canvas.height / 2},
             },
             up: {
                 rotate: 0,
                 textConfig: this.textConfigs.up,
                 themeGuide: themeGuide.b,
-                guidePosition: {
-                    x: 0,
-                    y: 1,
-                },
-                containerPosition: {
-                    x: this.sys.canvas.width / 2,
-                    y: this.sys.canvas.height / 8,
-                },
+                guidePosition: {x: 0, y: 1},
+                containerPosition: {x: this.sys.canvas.width / 2, y: this.sys.canvas.height / 8},
             },
             right: {
                 rotate: 0.5,
                 textConfig: this.textConfigs.right,
                 themeGuide: themeGuide.c,
-                guidePosition: {
-                    x: -1.5,
-                    y: 0,
-                },
-                containerPosition: {
-                    x: this.sys.canvas.width / 8 * 7,
-                    y: this.sys.canvas.height / 2,
-                },
+                guidePosition: {x: -1.5, y: 0},
+                containerPosition: {x: this.sys.canvas.width / 8 * 7, y: this.sys.canvas.height / 2},
             },
             down: {
                 rotate: 1,
                 textConfig: this.textConfigs.down,
                 themeGuide: themeGuide.d,
-                guidePosition: {
-                    x: 0,
-                    y: -1,
-                },
-                containerPosition: {
-                    x: this.sys.canvas.width / 2,
-                    y: this.sys.canvas.height / 8 * 7,
-                },
+                guidePosition: {x: 0, y: -1},
+                containerPosition: {x: this.sys.canvas.width / 2, y: this.sys.canvas.height / 8 * 7},
             }
         }
         
@@ -352,26 +319,17 @@ export default class LoadingScene extends Phaser.Scene {
             //     yoyo: true
             // });
             
-            
-            this.time.delayedCall(1000, () => {
-                guide.updateText();
-            });
-            this.time.delayedCall(2000, () => {
-                guide.updateText();
-            });
-            this.time.delayedCall(4000, () => {
-                guide.updateText();
-            });
-            this.time.delayedCall(8000, () => {
-                guide.updateText();
-            });
-            
-            
+            // フォント反映のために指定時間で表示を更新させる
+            const callTimeList = [1000, 2000, 4000, 8000];
+            for (const callTime of callTimeList) {
+                this.time.delayedCall(callTime, () => {
+                    guide.updateText();
+                });
+            }
         }
-        
-        
     }
     
+    /** 各方向のガイドを非表示にする */
     hideDirGuide() {
         this.containers.left?.setVisible(false);
         this.containers.up?.setVisible(false);
