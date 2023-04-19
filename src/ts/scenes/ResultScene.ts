@@ -82,7 +82,7 @@ export default class ResultScene extends Phaser.Scene {
                 x: (this.sys.canvas.width / 2) - (this.sys.canvas.width / 12),
                 y: (this.sys.canvas.height / 2) - (this.sys.canvas.height / 10),
                 text: 'Score',
-                origin: {x: 0.5, y: 0.5},
+                origin: {x: 1, y: 0.5},
                 style: {
                     fontFamily: MyFonts.google.ShareTechMono,
                     fontSize: 6 * window.devicePixelRatio + 'vmin',
@@ -108,7 +108,7 @@ export default class ResultScene extends Phaser.Scene {
                 x: (this.sys.canvas.width / 2) - (this.sys.canvas.width / 12),
                 y: (this.sys.canvas.height / 2) + (this.sys.canvas.height / 10),
                 text: 'Rank',
-                origin: {x: 0.5, y: 0.5},
+                origin: {x: 1, y: 0.5},
                 style: {
                     fontFamily: MyFonts.google.ShareTechMono,
                     fontSize: 6 * window.devicePixelRatio + 'vmin',
@@ -132,7 +132,6 @@ export default class ResultScene extends Phaser.Scene {
             },
         }
         
-        // jsonファイルの読込
         this.load.json('rankinfo', './config/rankinfo.json');
     }
     
@@ -146,11 +145,13 @@ export default class ResultScene extends Phaser.Scene {
         // 画像を配置する
         this.images.result = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 8, 'result');
         const ime = new SgpjImageEditor();
-        let sf = ime.getScaleFactorFromVmin(10, this.images.result, this);
+        let sf = ime.getScaleFactorFromVmin(20, this.images.result, this);
         if (window.innerWidth <= 767) {
             sf = ime.getScaleFactorFromVmin(50, this.images.result, this);
-        } else if (window.innerWidth <= 1280) {
+        } else if (window.innerWidth <= 1000) {
             sf = ime.getScaleFactorFromVmin(30, this.images.result, this);
+        } else if (window.innerWidth <= 1280) {
+            sf = ime.getScaleFactorFromVmin(20, this.images.result, this);
         }
         this.images.result.setDisplaySize(this.images.result.width * sf, this.images.result.height * sf);
         
@@ -217,11 +218,13 @@ export default class ResultScene extends Phaser.Scene {
         for (const loopAnimeTarget of loopAnimeTargets) {
             this.tweens.add({
                 targets: loopAnimeTarget,
-                alpha: { from: 0.0, to: 1.0 },
-                scale: { from: 0.0, to: 1.0 },
-                ease: Phaser.Math.Easing.Back.Out,
-                duration: 300,
-                yoyo: false
+                scale: { from: 1.0, to: 1.1 },
+                ease: 'Sine.InOut',
+                duration: 100,
+                repeat: -1,
+                repeatDelay: 3000,
+                delay: 3000,
+                yoyo: true
             });
         }
     }

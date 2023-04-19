@@ -18,7 +18,6 @@ interface ImageObjects {
 
 
 export default class CountDownScene extends Phaser.Scene {
-    
     private readonly COUNT_START_TIME: number = 3;
     private textConfigs: TextConfigs | undefined;
     private texts: TextObjects;
@@ -46,7 +45,6 @@ export default class CountDownScene extends Phaser.Scene {
     
     
     preload(): void {
-        // 文字スタイルの定義
         this.textConfigs = {
             loading: {
                 x: this.sys.canvas.width / 2,
@@ -70,17 +68,16 @@ export default class CountDownScene extends Phaser.Scene {
             return;
         }
         
-        
-        // ローディング表示用テキストの配置
+        // ローディング表示用テキストを配置する
         this.texts.loading = this.make.text(this.textConfigs.loading);
         
-        // 数字の配置
+        // 数字画像を配置する
         this.images.number = this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'num1');
         const ime = new SgpjImageEditor();
         this.numberImageBaseScale = ime.getScaleFactorFromVmin(30, this.images.number, this);
         this.images.number.setScale(this.numberImageBaseScale).setVisible(false);
         
-        // カウントを初期化して実行
+        // カウントを初期化して実行する
         this.timeCounter = this.COUNT_START_TIME;
         this.time.addEvent({
             delay: 1000,
@@ -97,7 +94,6 @@ export default class CountDownScene extends Phaser.Scene {
                 
                 if (this.timeCounter === 0) {
                     this.images.number.setVisible(false);
-                    // this.cameras.main.fadeOut(20, 0, 0, 0);
                     this.scene.transition({
                         target: 'GamingScene',
                         data: {
