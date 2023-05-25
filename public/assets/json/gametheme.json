@@ -48,14 +48,18 @@
             {"item": "抹茶", "anser": ["d"]},
             {"item": "ピーマン", "anser": ["a","c","d"]},
             {"item": "いちご", "anser": ["a","d"]},
-            {"item": "確定申告\nにある色", "anser": ["b"]},
-            {"item": "どん兵衛\n天ぷらそば", "anser": ["a"]},
-            {"item": "どん兵衛\nきつねうどん", "anser": ["d"]},
-            {"item": "東京メトロ\n丸ノ内線", "anser": ["a"]},
-            {"item": "都営地下鉄\n三田線", "anser": ["b"]},
-            {"item": "JR山手線", "anser": ["d"]},
-            {"item": "道路標識\n「指定方向外進行禁止」\nの色", "anser": ["b"]},
-            {"item": "道路標識\n「車両進入禁止」\nの色", "anser": ["a"]}
+            {"item": "どん兵衛の\n天ぷらそばの色", "anser": ["a"]},
+            {"item": "どん兵衛の\nきつねうどんの色", "anser": ["d"]},
+            {"item": "スウェーデンの\n国旗にある色", "anser": ["b","c"]},
+            {"item": "アメリカの\n国旗にある色", "anser": ["a","b"]},
+            {"item": "ファミリーマートの\nロゴにある色", "anser": ["b","d"]},
+            {"item": "ガストの\nロゴにある色", "anser": ["a","c"]},
+            {"item": "facebookの\nロゴの色", "anser": ["b"]},
+            {"item": "Youtubeの\nロゴにある色", "anser": ["a"]},
+            {"item": "Googleの\nロゴにある色", "anser": ["a","b","c","d"]},
+            {"item": "銀座線の色", "anser": ["c"]},
+            {"item": "丸ノ内線の色", "anser": ["a"]},
+            {"item": "山手線の色", "anser": ["d"]}
         ]
     }
 ]
